@@ -4,7 +4,7 @@ tasks:
   test:
     cmds:
       - echo " *** Running Coverage Tests ***"
-      - $(pwd)/test.sh
+      - $(pwd)/scripts/test.sh
       - echo " *** Completed *** "
     silent: true
   relocate:
