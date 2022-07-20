@@ -1,10 +1,10 @@
-name: Backmerge from master
+name: Backmerge from main
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
-  merge-master-back-to-qa:
+  merge-main-back-to-qa:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,10 +14,10 @@ jobs:
         run: |
           git config --local user.email "github@wednesday.is"
           git config --local user.name "Github Actions"
-      - name: Merge master back to qa
+      - name: Merge main back to qa
         run: |
           git fetch --unshallow
           git checkout qa
           git pull
-          git merge --no-ff master -m "Auto-merge master back to qa"
+          git merge --no-ff main -m "Auto-merge main back to qa"
           git push

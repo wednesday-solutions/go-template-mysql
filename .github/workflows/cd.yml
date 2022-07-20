@@ -2,7 +2,7 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   deploy:
     name: Deploy to ECS
@@ -17,7 +17,7 @@ jobs:
         run: echo ::set-output name=stage::${GITHUB_REF#refs/*/}
       - name: Set env.ENVIRONMENT_NAME
         run: |
-          if [[ ${{ steps.vars.outputs.stage }} == 'master' ]]; then
+          if [[ ${{ steps.vars.outputs.stage }} == 'main' ]]; then
               echo "ENVIRONMENT_NAME=dev" >> "$GITHUB_ENV"
           else
               echo "ENVIRONMENT_NAME=${{ steps.vars.outputs.stage }}" >> "$GITHUB_ENV"

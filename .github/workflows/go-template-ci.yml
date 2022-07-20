@@ -3,11 +3,10 @@ name: Go-Template CI Master - Test
 on:
   pull_request:
     branches:
-      - master
-      - feat/mysql
+      - main
   push:
     branches:
-      - master
+      - main
 
 
 jobs:
