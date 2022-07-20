@@ -36,7 +36,7 @@ func TestNew(t *testing.T) {
 	if err != nil {
 		t.Fatal(err.Error())
 	}
-	assert.Equal(t, response["data"], "Go template at your service!🍲")
+	assert.Equal(t, response["data"], "Go template MySQL at your service!🍲")
 }
 
 type args struct {

@@ -32,7 +32,7 @@ type response struct {
 }
 
 func healthCheck(c echo.Context) error {
-	return c.JSON(http.StatusOK, response{Data: "Go template at your service!🍲"})
+	return c.JSON(http.StatusOK, response{Data: "Go template MySQL at your service!🍲"})
 }
 
 // Config represents server specific config

@@ -5,11 +5,11 @@
     <img src="https://uploads-ssl.webflow.com/5ee36ce1473112550f1e1739/5f5879492fafecdb3e5b0e75_wednesday_logo.svg">
   </a>
   <p>
-    <h1 align="left">Go Template
+    <h1 align="left">Go template MySQL
     </h1>
   </p>
   <p>
-An enterprise go template application showcasing - Testing strategies, middleware support, and Continuous integration.
+An enterprise Go template MySQL application showcasing - Testing strategies, middleware support, and Continuous integration.
   </p>
   
   ___
@@ -45,7 +45,7 @@ An enterprise go template application showcasing - Testing strategies, middlewar
 
 
 
-The Go Template is a template/starter go project.
+The Go template MySQL is a template/starter go project.
 
 ## Out of the box support for
 
@@ -144,7 +144,7 @@ go-template/
 │     └──auth/
 │     └──secure/
 │  └──migrations/                   # these are the migrations to be applied
-│  └──mysql/                     # this takes care of connecting to postgre
+│  └──mysql/                        # this takes care of connecting to postgre
 │  └──server/                       # this package have functionality to start a echo server
 │  └──services/                     # this will have services used in the server
 └──models/
@@ -267,4 +267,4 @@ Sample command to generate mocks
 The postman collection can be found [here](postman/collection.json) and has been auto-generated using [graphql-test](https://www.npmjs.com/package/graphql-testkit)
 ## License
 
-Go Template is licensed under the MIT license. Check the [LICENSE](LICENSE) file for details.
+Go template MySQL is licensed under the MIT license. Check the [LICENSE](LICENSE) file for details.
