@@ -132,8 +132,6 @@ type (
 	// GorpMigrationSlice is an alias for a slice of pointers to GorpMigration.
 	// This should almost always be used instead of []GorpMigration.
 	GorpMigrationSlice []*GorpMigration
-	// GorpMigrationHook is the signature for custom GorpMigration hook methods
-	GorpMigrationHook func(context.Context, boil.ContextExecutor, *GorpMigration) error
 
 	gorpMigrationQuery struct {
 		*queries.Query
@@ -161,179 +159,6 @@ var (
 	_ = qmhelper.Where
 )
 
-var gorpMigrationAfterSelectHooks []GorpMigrationHook
-
-var gorpMigrationBeforeInsertHooks []GorpMigrationHook
-var gorpMigrationAfterInsertHooks []GorpMigrationHook
-
-var gorpMigrationBeforeUpdateHooks []GorpMigrationHook
-var gorpMigrationAfterUpdateHooks []GorpMigrationHook
-
-var gorpMigrationBeforeDeleteHooks []GorpMigrationHook
-var gorpMigrationAfterDeleteHooks []GorpMigrationHook
-
-var gorpMigrationBeforeUpsertHooks []GorpMigrationHook
-var gorpMigrationAfterUpsertHooks []GorpMigrationHook
-
-// doAfterSelectHooks executes all "after Select" hooks.
-func (o *GorpMigration) doAfterSelectHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range gorpMigrationAfterSelectHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doBeforeInsertHooks executes all "before insert" hooks.
-func (o *GorpMigration) doBeforeInsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range gorpMigrationBeforeInsertHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doAfterInsertHooks executes all "after Insert" hooks.
-func (o *GorpMigration) doAfterInsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range gorpMigrationAfterInsertHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doBeforeUpdateHooks executes all "before Update" hooks.
-func (o *GorpMigration) doBeforeUpdateHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range gorpMigrationBeforeUpdateHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doAfterUpdateHooks executes all "after Update" hooks.
-func (o *GorpMigration) doAfterUpdateHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range gorpMigrationAfterUpdateHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doBeforeDeleteHooks executes all "before Delete" hooks.
-func (o *GorpMigration) doBeforeDeleteHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range gorpMigrationBeforeDeleteHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doAfterDeleteHooks executes all "after Delete" hooks.
-func (o *GorpMigration) doAfterDeleteHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range gorpMigrationAfterDeleteHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doBeforeUpsertHooks executes all "before Upsert" hooks.
-func (o *GorpMigration) doBeforeUpsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range gorpMigrationBeforeUpsertHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doAfterUpsertHooks executes all "after Upsert" hooks.
-func (o *GorpMigration) doAfterUpsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range gorpMigrationAfterUpsertHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// AddGorpMigrationHook registers your hook function for all future operations.
-func AddGorpMigrationHook(hookPoint boil.HookPoint, gorpMigrationHook GorpMigrationHook) {
-	switch hookPoint {
-	case boil.AfterSelectHook:
-		gorpMigrationAfterSelectHooks = append(gorpMigrationAfterSelectHooks, gorpMigrationHook)
-	case boil.BeforeInsertHook:
-		gorpMigrationBeforeInsertHooks = append(gorpMigrationBeforeInsertHooks, gorpMigrationHook)
-	case boil.AfterInsertHook:
-		gorpMigrationAfterInsertHooks = append(gorpMigrationAfterInsertHooks, gorpMigrationHook)
-	case boil.BeforeUpdateHook:
-		gorpMigrationBeforeUpdateHooks = append(gorpMigrationBeforeUpdateHooks, gorpMigrationHook)
-	case boil.AfterUpdateHook:
-		gorpMigrationAfterUpdateHooks = append(gorpMigrationAfterUpdateHooks, gorpMigrationHook)
-	case boil.BeforeDeleteHook:
-		gorpMigrationBeforeDeleteHooks = append(gorpMigrationBeforeDeleteHooks, gorpMigrationHook)
-	case boil.AfterDeleteHook:
-		gorpMigrationAfterDeleteHooks = append(gorpMigrationAfterDeleteHooks, gorpMigrationHook)
-	case boil.BeforeUpsertHook:
-		gorpMigrationBeforeUpsertHooks = append(gorpMigrationBeforeUpsertHooks, gorpMigrationHook)
-	case boil.AfterUpsertHook:
-		gorpMigrationAfterUpsertHooks = append(gorpMigrationAfterUpsertHooks, gorpMigrationHook)
-	}
-}
-
 // One returns a single gorpMigration record from the query.
 func (q gorpMigrationQuery) One(ctx context.Context, exec boil.ContextExecutor) (*GorpMigration, error) {
 	o := &GorpMigration{}
@@ -348,10 +173,6 @@ func (q gorpMigrationQuery) One(ctx context.Context, exec boil.ContextExecutor) 
 		return nil, errors.Wrap(err, "models: failed to execute a one query for gorp_migrations")
 	}
 
-	if err := o.doAfterSelectHooks(ctx, exec); err != nil {
-		return o, err
-	}
-
 	return o, nil
 }
 
@@ -362,14 +183,6 @@ func (q gorpMigrationQuery) All(ctx context.Context, exec boil.ContextExecutor) 
 	err := q.Bind(ctx, exec, &o)
 	if err != nil {
 		return nil, errors.Wrap(err, "models: failed to assign all query results to GorpMigration slice")
-	}
-
-	if len(gorpMigrationAfterSelectHooks) != 0 {
-		for _, obj := range o {
-			if err := obj.doAfterSelectHooks(ctx, exec); err != nil {
-				return o, err
-			}
-		}
 	}
 
 	return o, nil
@@ -440,10 +253,6 @@ func FindGorpMigration(ctx context.Context, exec boil.ContextExecutor, iD string
 		return nil, errors.Wrap(err, "models: unable to select from gorp_migrations")
 	}
 
-	if err = gorpMigrationObj.doAfterSelectHooks(ctx, exec); err != nil {
-		return gorpMigrationObj, err
-	}
-
 	return gorpMigrationObj, nil
 }
 
@@ -455,10 +264,6 @@ func (o *GorpMigration) Insert(ctx context.Context, exec boil.ContextExecutor, c
 	}
 
 	var err error
-
-	if err := o.doBeforeInsertHooks(ctx, exec); err != nil {
-		return err
-	}
 
 	nzDefaults := queries.NonZeroDefaultSet(gorpMigrationColumnsWithDefault, o)
 
@@ -539,7 +344,7 @@ CacheNoHooks:
 		gorpMigrationInsertCacheMut.Unlock()
 	}
 
-	return o.doAfterInsertHooks(ctx, exec)
+	return nil
 }
 
 // Update uses an executor to update the GorpMigration.
@@ -547,9 +352,6 @@ CacheNoHooks:
 // Update does not automatically update the record in case of default values. Use .Reload() to refresh the records.
 func (o *GorpMigration) Update(ctx context.Context, exec boil.ContextExecutor, columns boil.Columns) (int64, error) {
 	var err error
-	if err = o.doBeforeUpdateHooks(ctx, exec); err != nil {
-		return 0, err
-	}
 	key := makeCacheKey(columns, nil)
 	gorpMigrationUpdateCacheMut.RLock()
 	cache, cached := gorpMigrationUpdateCache[key]
@@ -602,7 +404,7 @@ func (o *GorpMigration) Update(ctx context.Context, exec boil.ContextExecutor, c
 		gorpMigrationUpdateCacheMut.Unlock()
 	}
 
-	return rowsAff, o.doAfterUpdateHooks(ctx, exec)
+	return rowsAff, nil
 }
 
 // UpdateAll updates all rows with the specified column values.
@@ -679,10 +481,6 @@ var mySQLGorpMigrationUniqueColumns = []string{
 func (o *GorpMigration) Upsert(ctx context.Context, exec boil.ContextExecutor, updateColumns, insertColumns boil.Columns) error {
 	if o == nil {
 		return errors.New("models: no gorp_migrations provided for upsert")
-	}
-
-	if err := o.doBeforeUpsertHooks(ctx, exec); err != nil {
-		return err
 	}
 
 	nzDefaults := queries.NonZeroDefaultSet(gorpMigrationColumnsWithDefault, o)
@@ -805,7 +603,7 @@ CacheNoHooks:
 		gorpMigrationUpsertCacheMut.Unlock()
 	}
 
-	return o.doAfterUpsertHooks(ctx, exec)
+	return nil
 }
 
 // Delete deletes a single GorpMigration record with an executor.
@@ -813,10 +611,6 @@ CacheNoHooks:
 func (o *GorpMigration) Delete(ctx context.Context, exec boil.ContextExecutor) (int64, error) {
 	if o == nil {
 		return 0, errors.New("models: no GorpMigration provided for delete")
-	}
-
-	if err := o.doBeforeDeleteHooks(ctx, exec); err != nil {
-		return 0, err
 	}
 
 	args := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(o)), gorpMigrationPrimaryKeyMapping)
@@ -835,10 +629,6 @@ func (o *GorpMigration) Delete(ctx context.Context, exec boil.ContextExecutor) (
 	rowsAff, err := result.RowsAffected()
 	if err != nil {
 		return 0, errors.Wrap(err, "models: failed to get rows affected by delete for gorp_migrations")
-	}
-
-	if err := o.doAfterDeleteHooks(ctx, exec); err != nil {
-		return 0, err
 	}
 
 	return rowsAff, nil
@@ -871,14 +661,6 @@ func (o GorpMigrationSlice) DeleteAll(ctx context.Context, exec boil.ContextExec
 		return 0, nil
 	}
 
-	if len(gorpMigrationBeforeDeleteHooks) != 0 {
-		for _, obj := range o {
-			if err := obj.doBeforeDeleteHooks(ctx, exec); err != nil {
-				return 0, err
-			}
-		}
-	}
-
 	var args []interface{}
 	for _, obj := range o {
 		pkeyArgs := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(obj)), gorpMigrationPrimaryKeyMapping)
@@ -901,14 +683,6 @@ func (o GorpMigrationSlice) DeleteAll(ctx context.Context, exec boil.ContextExec
 	rowsAff, err := result.RowsAffected()
 	if err != nil {
 		return 0, errors.Wrap(err, "models: failed to get rows affected by deleteall for gorp_migrations")
-	}
-
-	if len(gorpMigrationAfterDeleteHooks) != 0 {
-		for _, obj := range o {
-			if err := obj.doAfterDeleteHooks(ctx, exec); err != nil {
-				return 0, err
-			}
-		}
 	}
 
 	return rowsAff, nil

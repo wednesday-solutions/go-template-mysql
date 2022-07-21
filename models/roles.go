@@ -147,8 +147,6 @@ type (
 	// RoleSlice is an alias for a slice of pointers to Role.
 	// This should almost always be used instead of []Role.
 	RoleSlice []*Role
-	// RoleHook is the signature for custom Role hook methods
-	RoleHook func(context.Context, boil.ContextExecutor, *Role) error
 
 	roleQuery struct {
 		*queries.Query
@@ -176,179 +174,6 @@ var (
 	_ = qmhelper.Where
 )
 
-var roleAfterSelectHooks []RoleHook
-
-var roleBeforeInsertHooks []RoleHook
-var roleAfterInsertHooks []RoleHook
-
-var roleBeforeUpdateHooks []RoleHook
-var roleAfterUpdateHooks []RoleHook
-
-var roleBeforeDeleteHooks []RoleHook
-var roleAfterDeleteHooks []RoleHook
-
-var roleBeforeUpsertHooks []RoleHook
-var roleAfterUpsertHooks []RoleHook
-
-// doAfterSelectHooks executes all "after Select" hooks.
-func (o *Role) doAfterSelectHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range roleAfterSelectHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doBeforeInsertHooks executes all "before insert" hooks.
-func (o *Role) doBeforeInsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range roleBeforeInsertHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doAfterInsertHooks executes all "after Insert" hooks.
-func (o *Role) doAfterInsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range roleAfterInsertHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doBeforeUpdateHooks executes all "before Update" hooks.
-func (o *Role) doBeforeUpdateHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range roleBeforeUpdateHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doAfterUpdateHooks executes all "after Update" hooks.
-func (o *Role) doAfterUpdateHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range roleAfterUpdateHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doBeforeDeleteHooks executes all "before Delete" hooks.
-func (o *Role) doBeforeDeleteHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range roleBeforeDeleteHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doAfterDeleteHooks executes all "after Delete" hooks.
-func (o *Role) doAfterDeleteHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range roleAfterDeleteHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doBeforeUpsertHooks executes all "before Upsert" hooks.
-func (o *Role) doBeforeUpsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range roleBeforeUpsertHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// doAfterUpsertHooks executes all "after Upsert" hooks.
-func (o *Role) doAfterUpsertHooks(ctx context.Context, exec boil.ContextExecutor) (err error) {
-	if boil.HooksAreSkipped(ctx) {
-		return nil
-	}
-
-	for _, hook := range roleAfterUpsertHooks {
-		if err := hook(ctx, exec, o); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// AddRoleHook registers your hook function for all future operations.
-func AddRoleHook(hookPoint boil.HookPoint, roleHook RoleHook) {
-	switch hookPoint {
-	case boil.AfterSelectHook:
-		roleAfterSelectHooks = append(roleAfterSelectHooks, roleHook)
-	case boil.BeforeInsertHook:
-		roleBeforeInsertHooks = append(roleBeforeInsertHooks, roleHook)
-	case boil.AfterInsertHook:
-		roleAfterInsertHooks = append(roleAfterInsertHooks, roleHook)
-	case boil.BeforeUpdateHook:
-		roleBeforeUpdateHooks = append(roleBeforeUpdateHooks, roleHook)
-	case boil.AfterUpdateHook:
-		roleAfterUpdateHooks = append(roleAfterUpdateHooks, roleHook)
-	case boil.BeforeDeleteHook:
-		roleBeforeDeleteHooks = append(roleBeforeDeleteHooks, roleHook)
-	case boil.AfterDeleteHook:
-		roleAfterDeleteHooks = append(roleAfterDeleteHooks, roleHook)
-	case boil.BeforeUpsertHook:
-		roleBeforeUpsertHooks = append(roleBeforeUpsertHooks, roleHook)
-	case boil.AfterUpsertHook:
-		roleAfterUpsertHooks = append(roleAfterUpsertHooks, roleHook)
-	}
-}
-
 // One returns a single role record from the query.
 func (q roleQuery) One(ctx context.Context, exec boil.ContextExecutor) (*Role, error) {
 	o := &Role{}
@@ -363,10 +188,6 @@ func (q roleQuery) One(ctx context.Context, exec boil.ContextExecutor) (*Role, e
 		return nil, errors.Wrap(err, "models: failed to execute a one query for roles")
 	}
 
-	if err := o.doAfterSelectHooks(ctx, exec); err != nil {
-		return o, err
-	}
-
 	return o, nil
 }
 
@@ -377,14 +198,6 @@ func (q roleQuery) All(ctx context.Context, exec boil.ContextExecutor) (RoleSlic
 	err := q.Bind(ctx, exec, &o)
 	if err != nil {
 		return nil, errors.Wrap(err, "models: failed to assign all query results to Role slice")
-	}
-
-	if len(roleAfterSelectHooks) != 0 {
-		for _, obj := range o {
-			if err := obj.doAfterSelectHooks(ctx, exec); err != nil {
-				return o, err
-			}
-		}
 	}
 
 	return o, nil
@@ -499,13 +312,6 @@ func (roleL) LoadUsers(ctx context.Context, e boil.ContextExecutor, singular boo
 		return errors.Wrap(err, "error occurred during iteration of eager loaded relations for users")
 	}
 
-	if len(userAfterSelectHooks) != 0 {
-		for _, obj := range resultSlice {
-			if err := obj.doAfterSelectHooks(ctx, e); err != nil {
-				return err
-			}
-		}
-	}
 	if singular {
 		object.R.Users = resultSlice
 		for _, foreign := range resultSlice {
@@ -694,10 +500,6 @@ func FindRole(ctx context.Context, exec boil.ContextExecutor, iD int, selectCols
 		return nil, errors.Wrap(err, "models: unable to select from roles")
 	}
 
-	if err = roleObj.doAfterSelectHooks(ctx, exec); err != nil {
-		return roleObj, err
-	}
-
 	return roleObj, nil
 }
 
@@ -718,10 +520,6 @@ func (o *Role) Insert(ctx context.Context, exec boil.ContextExecutor, columns bo
 		if queries.MustTime(o.UpdatedAt).IsZero() {
 			queries.SetScanner(&o.UpdatedAt, currTime)
 		}
-	}
-
-	if err := o.doBeforeInsertHooks(ctx, exec); err != nil {
-		return err
 	}
 
 	nzDefaults := queries.NonZeroDefaultSet(roleColumnsWithDefault, o)
@@ -814,7 +612,7 @@ CacheNoHooks:
 		roleInsertCacheMut.Unlock()
 	}
 
-	return o.doAfterInsertHooks(ctx, exec)
+	return nil
 }
 
 // Update uses an executor to update the Role.
@@ -828,9 +626,6 @@ func (o *Role) Update(ctx context.Context, exec boil.ContextExecutor, columns bo
 	}
 
 	var err error
-	if err = o.doBeforeUpdateHooks(ctx, exec); err != nil {
-		return 0, err
-	}
 	key := makeCacheKey(columns, nil)
 	roleUpdateCacheMut.RLock()
 	cache, cached := roleUpdateCache[key]
@@ -883,7 +678,7 @@ func (o *Role) Update(ctx context.Context, exec boil.ContextExecutor, columns bo
 		roleUpdateCacheMut.Unlock()
 	}
 
-	return rowsAff, o.doAfterUpdateHooks(ctx, exec)
+	return rowsAff, nil
 }
 
 // UpdateAll updates all rows with the specified column values.
@@ -968,10 +763,6 @@ func (o *Role) Upsert(ctx context.Context, exec boil.ContextExecutor, updateColu
 			queries.SetScanner(&o.CreatedAt, currTime)
 		}
 		queries.SetScanner(&o.UpdatedAt, currTime)
-	}
-
-	if err := o.doBeforeUpsertHooks(ctx, exec); err != nil {
-		return err
 	}
 
 	nzDefaults := queries.NonZeroDefaultSet(roleColumnsWithDefault, o)
@@ -1105,7 +896,7 @@ CacheNoHooks:
 		roleUpsertCacheMut.Unlock()
 	}
 
-	return o.doAfterUpsertHooks(ctx, exec)
+	return nil
 }
 
 // Delete deletes a single Role record with an executor.
@@ -1113,10 +904,6 @@ CacheNoHooks:
 func (o *Role) Delete(ctx context.Context, exec boil.ContextExecutor) (int64, error) {
 	if o == nil {
 		return 0, errors.New("models: no Role provided for delete")
-	}
-
-	if err := o.doBeforeDeleteHooks(ctx, exec); err != nil {
-		return 0, err
 	}
 
 	args := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(o)), rolePrimaryKeyMapping)
@@ -1135,10 +922,6 @@ func (o *Role) Delete(ctx context.Context, exec boil.ContextExecutor) (int64, er
 	rowsAff, err := result.RowsAffected()
 	if err != nil {
 		return 0, errors.Wrap(err, "models: failed to get rows affected by delete for roles")
-	}
-
-	if err := o.doAfterDeleteHooks(ctx, exec); err != nil {
-		return 0, err
 	}
 
 	return rowsAff, nil
@@ -1171,14 +954,6 @@ func (o RoleSlice) DeleteAll(ctx context.Context, exec boil.ContextExecutor) (in
 		return 0, nil
 	}
 
-	if len(roleBeforeDeleteHooks) != 0 {
-		for _, obj := range o {
-			if err := obj.doBeforeDeleteHooks(ctx, exec); err != nil {
-				return 0, err
-			}
-		}
-	}
-
 	var args []interface{}
 	for _, obj := range o {
 		pkeyArgs := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(obj)), rolePrimaryKeyMapping)
@@ -1201,14 +976,6 @@ func (o RoleSlice) DeleteAll(ctx context.Context, exec boil.ContextExecutor) (in
 	rowsAff, err := result.RowsAffected()
 	if err != nil {
 		return 0, errors.Wrap(err, "models: failed to get rows affected by deleteall for roles")
-	}
-
-	if len(roleAfterDeleteHooks) != 0 {
-		for _, obj := range o {
-			if err := obj.doAfterDeleteHooks(ctx, exec); err != nil {
-				return 0, err
-			}
-		}
 	}
 
 	return rowsAff, nil

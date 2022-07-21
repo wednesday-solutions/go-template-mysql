@@ -71,12 +71,6 @@ func TestCount(t *testing.T) {
 	t.Run("Users", testUsersCount)
 }
 
-func TestHooks(t *testing.T) {
-	t.Run("GorpMigrations", testGorpMigrationsHooks)
-	t.Run("Roles", testRolesHooks)
-	t.Run("Users", testUsersHooks)
-}
-
 func TestInsert(t *testing.T) {
 	t.Run("GorpMigrations", testGorpMigrationsInsert)
 	t.Run("GorpMigrations", testGorpMigrationsInsertWhitelist)
