@@ -1,0 +1,43 @@
+type Employee {
+  id: ID!
+  name: String
+  email: String
+  role: ERole
+  createdAt: Int
+  deletedAt: Int
+  updatedAt: Int
+}
+
+enum ERole {
+  EMPLOYEE
+  CASE_MANAGER
+  LINE_MANAGER
+  SUPER
+}
+
+input EmployeeCreateInput {
+  name: String!
+  email: String!
+  role: ERole
+}
+
+input EmployeeUpdateInput {
+  id: ID!
+  name: String
+  email: String
+  role: ERole
+}
+
+type EmployeeDeletePayload {
+  id: ID!
+}
+
+input EmployeePagination {
+  limit: Int!
+  page: Int!
+}
+
+type EmployeesPayload {
+  employees: [Employee!]!
+  total: Int!
+}

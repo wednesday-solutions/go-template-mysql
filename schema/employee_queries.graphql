@@ -1,0 +1,4 @@
+extend type Query {
+  employee: Employee!
+  employees(pagination: EmployeePagination): EmployeesPayload!
+}

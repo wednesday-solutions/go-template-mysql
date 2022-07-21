@@ -1,0 +1,5 @@
+extend type Mutation {
+  createEmployee(input: EmployeeCreateInput!): Employee!
+  updateEmployee(input: EmployeeUpdateInput): Employee!
+  deleteEmployee: EmployeeDeletePayload!
+}
