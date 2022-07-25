@@ -1,0 +1,65 @@
+type CaseStatus {
+  id: ID!
+  incidentReportId: ID!
+  status: CaseStatusType!
+  statusRemarks: String!
+  userId: ID!
+  createdAt: Int
+  deletedAt: Int
+  updatedAt: Int
+}
+
+enum CaseStatusType {
+  FILED
+  CASE_MANAGER_ASSIGNED
+  VALID_BY_CASE_MANAGER
+  INCOMPLETE_EVIDENCE
+  NO_DISCIPLINARY_CASE
+  LINE_MANAGER_ASSIGNED
+  VALID_BY_LINE_MANAGER
+  NTE_DRAFTED
+  NTE_ISSUED
+  RIDER_RESPONSE
+  ADMIN_HEARING
+  NOD_DRAFTED
+  NOD_ISSUED
+  NOW_DRAFTED
+  NOW_ISSUED
+}
+
+input CaseStatusCreateInput {
+  incidentReportId: ID!
+  status: NoticeType!
+  statusRemarks: String!
+  userId: ID!
+}
+
+input CaseStatusUpdateInput {
+  id: ID!
+  incidentReportId: ID
+  status: CaseStatusType
+  statusRemarks: String
+  userId: ID
+}
+
+input CaseStatusDeleteInput {
+  id: ID!
+}
+
+type CaseStatusDeletePayload {
+  id: ID!
+}
+
+input CaseStatusQueryInput {
+  id: ID!
+}
+
+input CaseStatusPagination {
+  limit: Int!
+  page: Int!
+}
+
+type CaseStatusesPayload {
+  caseStatuss: [CaseStatus!]!
+  total: Int!
+}

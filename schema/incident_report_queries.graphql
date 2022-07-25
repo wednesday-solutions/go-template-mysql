@@ -1,0 +1,4 @@
+extend type Query {
+  incidentReport(input: IncidentReportQueryInput!): IncidentReport!
+  incidentReports(pagination: IncidentReportPagination): IncidentReportsPayload!
+}

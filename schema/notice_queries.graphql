@@ -1,0 +1,4 @@
+extend type Query {
+  notice(input: NoticeQueryInput!): Notice!
+  notices(pagination: NoticePagination): NoticesPayload!
+}

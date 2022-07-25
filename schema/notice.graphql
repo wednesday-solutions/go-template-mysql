@@ -1,0 +1,59 @@
+type Notice {
+  id: ID!
+  incidentReportId: ID!
+  type: NoticeType!
+  issueDate: Int!
+  url: String!
+  sla: Int
+  noticeRead: Boolean
+  noticeSigned: Boolean
+  createdAt: Int
+  deletedAt: Int
+  updatedAt: Int
+}
+
+enum NoticeType {
+  NOTICE_OF_WARNING
+  NOTICE_TO_EXPLAIN
+  NOTICE_OF_DECISION
+}
+
+input NoticeCreateInput {
+  incidentReportId: ID!
+  type: NoticeType!
+  sla: Int
+  url: String!
+}
+
+input NoticeUpdateInput {
+  id: ID!
+  incidentReportId: ID
+  type: NoticeType
+  issueDate: Int
+  url: String
+  sla: Int
+  noticeRead: Boolean
+  noticeSigned: Boolean
+}
+
+input NoticeDeleteInput {
+  id: ID!
+}
+
+type NoticeDeletePayload {
+  id: ID!
+}
+
+input NoticeQueryInput {
+  id: ID!
+}
+
+input NoticePagination {
+  limit: Int!
+  page: Int!
+}
+
+type NoticesPayload {
+  notices: [Notice!]!
+  total: Int!
+}

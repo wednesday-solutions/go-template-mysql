@@ -1,0 +1,11 @@
+extend type Mutation {
+  createIncidentReportAttachemnt(
+    input: IncidentReportAttachmentCreateInput!
+  ): IncidentReportAttachment!
+  updateIncidentReportAttachment(
+    input: IncidentReportAttachmentUpdateInput!
+  ): IncidentReportAttachment!
+  deleteIncidentReportAttachment(
+    input: IncidentReportAttachmentDeleteInput!
+  ): IncidentReportAttachmentDeletePayload!
+}

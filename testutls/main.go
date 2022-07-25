@@ -10,6 +10,8 @@ import (
 	"go-template/internal/config"
 	"go-template/models"
 
+	fm "go-template/gqlmodels"
+
 	"github.com/DATA-DOG/go-sqlmock"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/joho/godotenv"
@@ -21,6 +23,10 @@ type key string
 
 var (
 	UserKey key = "user"
+)
+
+var (
+	EmployeeKey key = "employee"
 )
 
 var MockIpAddress = "0.0.0.0"
@@ -61,6 +67,35 @@ func MockUsers() []*models.User {
 			Mobile:    null.StringFrom("+911234567890"),
 			Address:   null.StringFrom("22 Jump Street"),
 		},
+	}
+
+}
+
+func MockEmployee() *models.Employee {
+	return &models.Employee{
+		ID:                 MockID,
+		Name:               "First",
+		Email:              MockEmail,
+		EmployeeAccessRole: null.StringFrom("CASE_MANAGER"),
+		DeletedAt:          null.NewTime(time.Time{}, false),
+		UpdatedAt:          null.NewTime(time.Time{}, false),
+	}
+}
+
+func MockEmployees() []*models.Employee {
+	return []*models.Employee{
+		{
+			Name:               "First",
+			Email:              MockEmail,
+			EmployeeAccessRole: null.StringFrom("CASE_MANAGER"),
+		},
+	}
+
+}
+
+func MockEmployeeQueryInput() fm.EmployeeQueryInput {
+	return fm.EmployeeQueryInput{
+		ID: "1",
 	}
 
 }

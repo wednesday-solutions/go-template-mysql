@@ -1,0 +1,5 @@
+extend type Mutation {
+  createCaseStatus(input: CaseStatusCreateInput!): CaseStatus!
+  updateCaseStatus(input: CaseStatusUpdateInput!): CaseStatus!
+  deleteCaseStatus(input: CaseStatusDeleteInput!): CaseStatusDeletePayload!
+}

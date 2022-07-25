@@ -12,68 +12,128 @@ import "testing"
 // It does NOT run each operation group in parallel.
 // Separating the tests thusly grants avoidance of Postgres deadlocks.
 func TestParent(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatuses)
+	t.Run("Employees", testEmployees)
 	t.Run("GorpMigrations", testGorpMigrations)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachments)
+	t.Run("IncidentReports", testIncidentReports)
+	t.Run("Notices", testNotices)
 	t.Run("Roles", testRoles)
 	t.Run("Users", testUsers)
 }
 
 func TestDelete(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesDelete)
+	t.Run("Employees", testEmployeesDelete)
 	t.Run("GorpMigrations", testGorpMigrationsDelete)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsDelete)
+	t.Run("IncidentReports", testIncidentReportsDelete)
+	t.Run("Notices", testNoticesDelete)
 	t.Run("Roles", testRolesDelete)
 	t.Run("Users", testUsersDelete)
 }
 
 func TestQueryDeleteAll(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesQueryDeleteAll)
+	t.Run("Employees", testEmployeesQueryDeleteAll)
 	t.Run("GorpMigrations", testGorpMigrationsQueryDeleteAll)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsQueryDeleteAll)
+	t.Run("IncidentReports", testIncidentReportsQueryDeleteAll)
+	t.Run("Notices", testNoticesQueryDeleteAll)
 	t.Run("Roles", testRolesQueryDeleteAll)
 	t.Run("Users", testUsersQueryDeleteAll)
 }
 
 func TestSliceDeleteAll(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesSliceDeleteAll)
+	t.Run("Employees", testEmployeesSliceDeleteAll)
 	t.Run("GorpMigrations", testGorpMigrationsSliceDeleteAll)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsSliceDeleteAll)
+	t.Run("IncidentReports", testIncidentReportsSliceDeleteAll)
+	t.Run("Notices", testNoticesSliceDeleteAll)
 	t.Run("Roles", testRolesSliceDeleteAll)
 	t.Run("Users", testUsersSliceDeleteAll)
 }
 
 func TestExists(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesExists)
+	t.Run("Employees", testEmployeesExists)
 	t.Run("GorpMigrations", testGorpMigrationsExists)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsExists)
+	t.Run("IncidentReports", testIncidentReportsExists)
+	t.Run("Notices", testNoticesExists)
 	t.Run("Roles", testRolesExists)
 	t.Run("Users", testUsersExists)
 }
 
 func TestFind(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesFind)
+	t.Run("Employees", testEmployeesFind)
 	t.Run("GorpMigrations", testGorpMigrationsFind)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsFind)
+	t.Run("IncidentReports", testIncidentReportsFind)
+	t.Run("Notices", testNoticesFind)
 	t.Run("Roles", testRolesFind)
 	t.Run("Users", testUsersFind)
 }
 
 func TestBind(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesBind)
+	t.Run("Employees", testEmployeesBind)
 	t.Run("GorpMigrations", testGorpMigrationsBind)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsBind)
+	t.Run("IncidentReports", testIncidentReportsBind)
+	t.Run("Notices", testNoticesBind)
 	t.Run("Roles", testRolesBind)
 	t.Run("Users", testUsersBind)
 }
 
 func TestOne(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesOne)
+	t.Run("Employees", testEmployeesOne)
 	t.Run("GorpMigrations", testGorpMigrationsOne)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsOne)
+	t.Run("IncidentReports", testIncidentReportsOne)
+	t.Run("Notices", testNoticesOne)
 	t.Run("Roles", testRolesOne)
 	t.Run("Users", testUsersOne)
 }
 
 func TestAll(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesAll)
+	t.Run("Employees", testEmployeesAll)
 	t.Run("GorpMigrations", testGorpMigrationsAll)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsAll)
+	t.Run("IncidentReports", testIncidentReportsAll)
+	t.Run("Notices", testNoticesAll)
 	t.Run("Roles", testRolesAll)
 	t.Run("Users", testUsersAll)
 }
 
 func TestCount(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesCount)
+	t.Run("Employees", testEmployeesCount)
 	t.Run("GorpMigrations", testGorpMigrationsCount)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsCount)
+	t.Run("IncidentReports", testIncidentReportsCount)
+	t.Run("Notices", testNoticesCount)
 	t.Run("Roles", testRolesCount)
 	t.Run("Users", testUsersCount)
 }
 
 func TestInsert(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesInsert)
+	t.Run("CaseStatuses", testCaseStatusesInsertWhitelist)
+	t.Run("Employees", testEmployeesInsert)
+	t.Run("Employees", testEmployeesInsertWhitelist)
 	t.Run("GorpMigrations", testGorpMigrationsInsert)
 	t.Run("GorpMigrations", testGorpMigrationsInsertWhitelist)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsInsert)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsInsertWhitelist)
+	t.Run("IncidentReports", testIncidentReportsInsert)
+	t.Run("IncidentReports", testIncidentReportsInsertWhitelist)
+	t.Run("Notices", testNoticesInsert)
+	t.Run("Notices", testNoticesInsertWhitelist)
 	t.Run("Roles", testRolesInsert)
 	t.Run("Roles", testRolesInsertWhitelist)
 	t.Run("Users", testUsersInsert)
@@ -83,6 +143,13 @@ func TestInsert(t *testing.T) {
 // TestToOne tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToOne(t *testing.T) {
+	t.Run("CaseStatusToIncidentReportUsingIncidentReport", testCaseStatusToOneIncidentReportUsingIncidentReport)
+	t.Run("CaseStatusToEmployeeUsingUser", testCaseStatusToOneEmployeeUsingUser)
+	t.Run("IncidentReportAttachmentToIncidentReportUsingIncidentReport", testIncidentReportAttachmentToOneIncidentReportUsingIncidentReport)
+	t.Run("IncidentReportToEmployeeUsingCaseManager", testIncidentReportToOneEmployeeUsingCaseManager)
+	t.Run("IncidentReportToEmployeeUsingEmployee", testIncidentReportToOneEmployeeUsingEmployee)
+	t.Run("IncidentReportToEmployeeUsingLineManager", testIncidentReportToOneEmployeeUsingLineManager)
+	t.Run("NoticeToIncidentReportUsingIncidentReport", testNoticeToOneIncidentReportUsingIncidentReport)
 	t.Run("UserToRoleUsingRole", testUserToOneRoleUsingRole)
 }
 
@@ -93,18 +160,34 @@ func TestOneToOne(t *testing.T) {}
 // TestToMany tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToMany(t *testing.T) {
+	t.Run("EmployeeToUserCaseStatuses", testEmployeeToManyUserCaseStatuses)
+	t.Run("EmployeeToCaseManagerIncidentReports", testEmployeeToManyCaseManagerIncidentReports)
+	t.Run("EmployeeToIncidentReports", testEmployeeToManyIncidentReports)
+	t.Run("EmployeeToLineManagerIncidentReports", testEmployeeToManyLineManagerIncidentReports)
+	t.Run("IncidentReportToCaseStatuses", testIncidentReportToManyCaseStatuses)
+	t.Run("IncidentReportToIncidentReportAttachments", testIncidentReportToManyIncidentReportAttachments)
+	t.Run("IncidentReportToNotices", testIncidentReportToManyNotices)
 	t.Run("RoleToUsers", testRoleToManyUsers)
 }
 
 // TestToOneSet tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToOneSet(t *testing.T) {
+	t.Run("CaseStatusToIncidentReportUsingCaseStatuses", testCaseStatusToOneSetOpIncidentReportUsingIncidentReport)
+	t.Run("CaseStatusToEmployeeUsingUserCaseStatuses", testCaseStatusToOneSetOpEmployeeUsingUser)
+	t.Run("IncidentReportAttachmentToIncidentReportUsingIncidentReportAttachments", testIncidentReportAttachmentToOneSetOpIncidentReportUsingIncidentReport)
+	t.Run("IncidentReportToEmployeeUsingCaseManagerIncidentReports", testIncidentReportToOneSetOpEmployeeUsingCaseManager)
+	t.Run("IncidentReportToEmployeeUsingIncidentReports", testIncidentReportToOneSetOpEmployeeUsingEmployee)
+	t.Run("IncidentReportToEmployeeUsingLineManagerIncidentReports", testIncidentReportToOneSetOpEmployeeUsingLineManager)
+	t.Run("NoticeToIncidentReportUsingNotices", testNoticeToOneSetOpIncidentReportUsingIncidentReport)
 	t.Run("UserToRoleUsingUsers", testUserToOneSetOpRoleUsingRole)
 }
 
 // TestToOneRemove tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToOneRemove(t *testing.T) {
+	t.Run("IncidentReportToEmployeeUsingCaseManagerIncidentReports", testIncidentReportToOneRemoveOpEmployeeUsingCaseManager)
+	t.Run("IncidentReportToEmployeeUsingLineManagerIncidentReports", testIncidentReportToOneRemoveOpEmployeeUsingLineManager)
 	t.Run("UserToRoleUsingUsers", testUserToOneRemoveOpRoleUsingRole)
 }
 
@@ -119,47 +202,83 @@ func TestOneToOneRemove(t *testing.T) {}
 // TestToManyAdd tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToManyAdd(t *testing.T) {
+	t.Run("EmployeeToUserCaseStatuses", testEmployeeToManyAddOpUserCaseStatuses)
+	t.Run("EmployeeToCaseManagerIncidentReports", testEmployeeToManyAddOpCaseManagerIncidentReports)
+	t.Run("EmployeeToIncidentReports", testEmployeeToManyAddOpIncidentReports)
+	t.Run("EmployeeToLineManagerIncidentReports", testEmployeeToManyAddOpLineManagerIncidentReports)
+	t.Run("IncidentReportToCaseStatuses", testIncidentReportToManyAddOpCaseStatuses)
+	t.Run("IncidentReportToIncidentReportAttachments", testIncidentReportToManyAddOpIncidentReportAttachments)
+	t.Run("IncidentReportToNotices", testIncidentReportToManyAddOpNotices)
 	t.Run("RoleToUsers", testRoleToManyAddOpUsers)
 }
 
 // TestToManySet tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToManySet(t *testing.T) {
+	t.Run("EmployeeToCaseManagerIncidentReports", testEmployeeToManySetOpCaseManagerIncidentReports)
+	t.Run("EmployeeToLineManagerIncidentReports", testEmployeeToManySetOpLineManagerIncidentReports)
 	t.Run("RoleToUsers", testRoleToManySetOpUsers)
 }
 
 // TestToManyRemove tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToManyRemove(t *testing.T) {
+	t.Run("EmployeeToCaseManagerIncidentReports", testEmployeeToManyRemoveOpCaseManagerIncidentReports)
+	t.Run("EmployeeToLineManagerIncidentReports", testEmployeeToManyRemoveOpLineManagerIncidentReports)
 	t.Run("RoleToUsers", testRoleToManyRemoveOpUsers)
 }
 
 func TestReload(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesReload)
+	t.Run("Employees", testEmployeesReload)
 	t.Run("GorpMigrations", testGorpMigrationsReload)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsReload)
+	t.Run("IncidentReports", testIncidentReportsReload)
+	t.Run("Notices", testNoticesReload)
 	t.Run("Roles", testRolesReload)
 	t.Run("Users", testUsersReload)
 }
 
 func TestReloadAll(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesReloadAll)
+	t.Run("Employees", testEmployeesReloadAll)
 	t.Run("GorpMigrations", testGorpMigrationsReloadAll)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsReloadAll)
+	t.Run("IncidentReports", testIncidentReportsReloadAll)
+	t.Run("Notices", testNoticesReloadAll)
 	t.Run("Roles", testRolesReloadAll)
 	t.Run("Users", testUsersReloadAll)
 }
 
 func TestSelect(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesSelect)
+	t.Run("Employees", testEmployeesSelect)
 	t.Run("GorpMigrations", testGorpMigrationsSelect)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsSelect)
+	t.Run("IncidentReports", testIncidentReportsSelect)
+	t.Run("Notices", testNoticesSelect)
 	t.Run("Roles", testRolesSelect)
 	t.Run("Users", testUsersSelect)
 }
 
 func TestUpdate(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesUpdate)
+	t.Run("Employees", testEmployeesUpdate)
 	t.Run("GorpMigrations", testGorpMigrationsUpdate)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsUpdate)
+	t.Run("IncidentReports", testIncidentReportsUpdate)
+	t.Run("Notices", testNoticesUpdate)
 	t.Run("Roles", testRolesUpdate)
 	t.Run("Users", testUsersUpdate)
 }
 
 func TestSliceUpdateAll(t *testing.T) {
+	t.Run("CaseStatuses", testCaseStatusesSliceUpdateAll)
+	t.Run("Employees", testEmployeesSliceUpdateAll)
 	t.Run("GorpMigrations", testGorpMigrationsSliceUpdateAll)
+	t.Run("IncidentReportAttachments", testIncidentReportAttachmentsSliceUpdateAll)
+	t.Run("IncidentReports", testIncidentReportsSliceUpdateAll)
+	t.Run("Notices", testNoticesSliceUpdateAll)
 	t.Run("Roles", testRolesSliceUpdateAll)
 	t.Run("Users", testUsersSliceUpdateAll)
 }

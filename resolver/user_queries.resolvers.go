@@ -41,8 +41,3 @@ func (r *queryResolver) Users(ctx context.Context, pagination *gqlmodels.UserPag
 	}
 	return &gqlmodels.UsersPayload{Total: int(count), Users: convert.UsersToGraphQlUsers(users, 1)}, nil
 }
-
-// Query returns gqlmodels.QueryResolver implementation.
-func (r *Resolver) Query() gqlmodels.QueryResolver { return &queryResolver{r} }
-
-type queryResolver struct{ *Resolver }

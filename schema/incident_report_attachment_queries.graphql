@@ -1,0 +1,8 @@
+extend type Query {
+  incidentReportAttachment(
+    input: IncidentReportAttachmentQueryInput!
+  ): IncidentReportAttachment!
+  incidentReportAttachments(
+    pagination: IncidentReportAttachmentPagination
+  ): IncidentReportAttachmentsPayload!
+}

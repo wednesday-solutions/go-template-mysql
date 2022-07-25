@@ -1,0 +1,7 @@
+extend type Mutation {
+  createIncidentReport(input: IncidentReportCreateInput!): IncidentReport!
+  updateIncidentReport(input: IncidentReportUpdateInput!): IncidentReport!
+  deleteIncidentReport(
+    input: IncidentReportDeleteInput!
+  ): IncidentReportDeletePayload!
+}

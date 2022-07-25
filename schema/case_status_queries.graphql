@@ -1,0 +1,4 @@
+extend type Query {
+  caseStatus(input: CaseStatusQueryInput!): CaseStatus!
+  caseStatuses(pagination: CaseStatusPagination): CaseStatusesPayload!
+}

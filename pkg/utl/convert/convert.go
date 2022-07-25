@@ -74,6 +74,52 @@ func PointerStringToNullDotInt(s *string) null.Int {
 	return null.IntFrom(i)
 }
 
+// UserToGraphQlUser converts type models.User into pointer type graphql.User
+func EmployeeToGraphQlEmployee(e *models.Employee, count int) *graphql.Employee {
+	count++
+	if e == nil {
+		return nil
+	}
+	accessRole := graphql.EmployeeAccessRole(e.EmployeeAccessRole.String)
+
+	return &graphql.Employee{
+		ID:                 strconv.Itoa(e.ID),
+		Name:               StringToPointerString(e.Name),
+		Email:              StringToPointerString(e.Email),
+		EmployeeAccessRole: &accessRole,
+	}
+}
+
+// EmployeesToGraphQlEmployees converts array of type models.Employee into array of pointer type graphql.Employee
+func EmployeesToGraphQlEmployees(u models.EmployeeSlice, count int) []*graphql.Employee {
+	var r []*graphql.Employee
+	for _, e := range u {
+		r = append(r, EmployeeToGraphQlEmployee(e, count))
+	}
+	// fmt.Printf("r %+v\n u %+v\n", r, u)
+	return r
+}
+
+// IncidentReportToGraphQlIncidentReport converts array of type models.IncidentReport into array of pointer type graphql.IncidentReport
+func IncidentReportToGraphQlIncidentReport(ir *models.IncidentReport, count int) *graphql.IncidentReport {
+	count++
+	if ir == nil {
+		return nil
+	}
+	var employee *models.Employee
+	if count <= constants.MaxDepth {
+		ir.L.LoadEmployee(context.Background(), boil.GetContextDB(), true, ir, nil) //nolint:errcheck
+		if ir.R != nil {
+			employee = ir.R.Employee
+		}
+	}
+
+	return &graphql.IncidentReport{
+		ID:       strconv.Itoa(ir.ID),
+		Employee: EmployeeToGraphQlEmployee(employee, count),
+	}
+}
+
 // UsersToGraphQlUsers converts array of type models.User into array of pointer type graphql.User
 func UsersToGraphQlUsers(u models.UserSlice, count int) []*graphql.User {
 	var r []*graphql.User

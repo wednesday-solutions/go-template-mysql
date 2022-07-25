@@ -1,4 +1,4 @@
 extend type Query {
-  employee: Employee!
+  employee(input: EmployeeQueryInput!): Employee!
   employees(pagination: EmployeePagination): EmployeesPayload!
 }

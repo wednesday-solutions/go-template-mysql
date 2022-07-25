@@ -2,14 +2,113 @@
 
 package gqlmodels
 
+import (
+	"fmt"
+	"io"
+	"strconv"
+)
+
 type BooleanFilter struct {
 	IsTrue  *bool `json:"isTrue"`
 	IsFalse *bool `json:"isFalse"`
 	IsNull  *bool `json:"isNull"`
 }
 
+type CaseStatus struct {
+	ID               string         `json:"id"`
+	IncidentReportID string         `json:"incidentReportId"`
+	Status           CaseStatusType `json:"status"`
+	StatusRemarks    string         `json:"statusRemarks"`
+	UserID           string         `json:"userId"`
+	CreatedAt        *int           `json:"createdAt"`
+	DeletedAt        *int           `json:"deletedAt"`
+	UpdatedAt        *int           `json:"updatedAt"`
+}
+
+type CaseStatusCreateInput struct {
+	IncidentReportID string     `json:"incidentReportId"`
+	Status           NoticeType `json:"status"`
+	StatusRemarks    string     `json:"statusRemarks"`
+	UserID           string     `json:"userId"`
+}
+
+type CaseStatusDeleteInput struct {
+	ID string `json:"id"`
+}
+
+type CaseStatusDeletePayload struct {
+	ID string `json:"id"`
+}
+
+type CaseStatusPagination struct {
+	Limit int `json:"limit"`
+	Page  int `json:"page"`
+}
+
+type CaseStatusQueryInput struct {
+	ID string `json:"id"`
+}
+
+type CaseStatusUpdateInput struct {
+	ID               string          `json:"id"`
+	IncidentReportID *string         `json:"incidentReportId"`
+	Status           *CaseStatusType `json:"status"`
+	StatusRemarks    *string         `json:"statusRemarks"`
+	UserID           *string         `json:"userId"`
+}
+
+type CaseStatusesPayload struct {
+	CaseStatuss []*CaseStatus `json:"caseStatuss"`
+	Total       int           `json:"total"`
+}
+
 type ChangePasswordResponse struct {
 	Ok bool `json:"ok"`
+}
+
+type Employee struct {
+	ID                 string              `json:"id"`
+	Name               *string             `json:"name"`
+	Email              *string             `json:"email"`
+	EmployeeAccessRole *EmployeeAccessRole `json:"employeeAccessRole"`
+	CreatedAt          *int                `json:"createdAt"`
+	DeletedAt          *int                `json:"deletedAt"`
+	UpdatedAt          *int                `json:"updatedAt"`
+}
+
+type EmployeeCreateInput struct {
+	Name               string              `json:"name"`
+	Email              string              `json:"email"`
+	EmployeeAccessRole *EmployeeAccessRole `json:"employeeAccessRole"`
+}
+
+type EmployeeDeleteInput struct {
+	ID string `json:"id"`
+}
+
+type EmployeeDeletePayload struct {
+	ID string `json:"id"`
+}
+
+type EmployeePagination struct {
+	Limit int `json:"limit"`
+	Page  int `json:"page"`
+}
+
+type EmployeeQueryInput struct {
+	ID string `json:"id"`
+}
+
+type EmployeeUpdateInput struct {
+	ID                 string              `json:"id"`
+	Name               *string             `json:"name"`
+	Email              *string             `json:"email"`
+	EmployeeAccessRole *EmployeeAccessRole `json:"employeeAccessRole"`
+}
+
+type EmployeesPayload struct {
+	Employees []*Employee `json:"employees"`
+	Total     int         `json:"total"`
 }
 
 type FloatFilter struct {
@@ -30,6 +129,117 @@ type IDFilter struct {
 	NotIn      []string `json:"notIn"`
 }
 
+type IncidentReport struct {
+	ID                          string              `json:"id"`
+	EmployeeID                  string              `json:"employeeId"`
+	CaseManagerID               *string             `json:"caseManagerId"`
+	LineMangerID                *string             `json:"lineMangerId"`
+	CoreSystemRiderID           *string             `json:"coreSystemRiderId"`
+	TrackingID                  int                 `json:"trackingId"`
+	IncidentDetails             string              `json:"incidentDetails"`
+	IncidentDate                int                 `json:"incidentDate"`
+	EvidenceReceiptDate         *int                `json:"evidenceReceiptDate"`
+	Remarks                     *string             `json:"remarks"`
+	Type                        *IncidentReportType `json:"type"`
+	URL                         *string             `json:"url"`
+	PreventiveSuspension        *bool               `json:"preventiveSuspension"`
+	DateOfAdministrativeHearing *int                `json:"dateOfAdministrativeHearing"`
+	Employee                    *Employee           `json:"employee"`
+	CaseManager                 *Employee           `json:"caseManager"`
+	LineManger                  *Employee           `json:"lineManger"`
+	CreatedAt                   *int                `json:"createdAt"`
+	DeletedAt                   *int                `json:"deletedAt"`
+	UpdatedAt                   *int                `json:"updatedAt"`
+}
+
+type IncidentReportAttachment struct {
+	ID               string `json:"id"`
+	IncidentReportID string `json:"incidentReportId"`
+	URL              string `json:"url"`
+	CreatedAt        *int   `json:"createdAt"`
+	DeletedAt        *int   `json:"deletedAt"`
+	UpdatedAt        *int   `json:"updatedAt"`
+}
+
+type IncidentReportAttachmentCreateInput struct {
+	IncidentReportID string `json:"incidentReportId"`
+	URL              string `json:"url"`
+}
+
+type IncidentReportAttachmentDeleteInput struct {
+	ID string `json:"id"`
+}
+
+type IncidentReportAttachmentDeletePayload struct {
+	ID string `json:"id"`
+}
+
+type IncidentReportAttachmentPagination struct {
+	Limit int `json:"limit"`
+	Page  int `json:"page"`
+}
+
+type IncidentReportAttachmentQueryInput struct {
+	ID string `json:"id"`
+}
+
+type IncidentReportAttachmentUpdateInput struct {
+	ID               string `json:"id"`
+	IncidentReportID string `json:"incidentReportId"`
+	URL              string `json:"url"`
+}
+
+type IncidentReportAttachmentsPayload struct {
+	IncidentReportAttachments []*IncidentReportAttachment `json:"incidentReportAttachments"`
+	Total                     int                         `json:"total"`
+}
+
+type IncidentReportCreateInput struct {
+	EmployeeID      string `json:"employeeId"`
+	TrackingID      int    `json:"trackingId"`
+	IncidentDetails string `json:"incidentDetails"`
+	IncidentDate    int    `json:"incidentDate"`
+}
+
+type IncidentReportDeleteInput struct {
+	ID string `json:"id"`
+}
+
+type IncidentReportDeletePayload struct {
+	ID string `json:"id"`
+}
+
+type IncidentReportPagination struct {
+	Limit int `json:"limit"`
+	Page  int `json:"page"`
+}
+
+type IncidentReportQueryInput struct {
+	ID string `json:"id"`
+}
+
+type IncidentReportUpdateInput struct {
+	ID                          string              `json:"id"`
+	EmployeeID                  *string             `json:"employeeId"`
+	CaseManagerID               *string             `json:"caseManagerId"`
+	LineMangerID                *string             `json:"lineMangerId"`
+	CoreSystemRiderID           *string             `json:"coreSystemRiderId"`
+	TrackingID                  *int                `json:"trackingId"`
+	IncidentDetails             *string             `json:"incidentDetails"`
+	IncidentDate                *int                `json:"incidentDate"`
+	EvidenceReceiptDate         *int                `json:"evidenceReceiptDate"`
+	Remarks                     *string             `json:"remarks"`
+	Type                        *IncidentReportType `json:"type"`
+	URL                         *string             `json:"url"`
+	PreventiveSuspension        *bool               `json:"preventiveSuspension"`
+	DateOfAdministrativeHearing *int                `json:"dateOfAdministrativeHearing"`
+}
+
+type IncidentReportsPayload struct {
+	IncidentReports []*IncidentReport `json:"incidentReports"`
+	Total           int               `json:"total"`
+}
+
 type IntFilter struct {
 	EqualTo           *int  `json:"equalTo"`
 	NotEqualTo        *int  `json:"notEqualTo"`
@@ -44,6 +254,60 @@ type IntFilter struct {
 type LoginResponse struct {
 	Token        string `json:"token"`
 	RefreshToken string `json:"refreshToken"`
+}
+
+type Notice struct {
+	ID               string     `json:"id"`
+	IncidentReportID string     `json:"incidentReportId"`
+	Type             NoticeType `json:"type"`
+	IssueDate        int        `json:"issueDate"`
+	URL              string     `json:"url"`
+	SLA              *int       `json:"sla"`
+	NoticeRead       *bool      `json:"noticeRead"`
+	NoticeSigned     *bool      `json:"noticeSigned"`
+	CreatedAt        *int       `json:"createdAt"`
+	DeletedAt        *int       `json:"deletedAt"`
+	UpdatedAt        *int       `json:"updatedAt"`
+}
+
+type NoticeCreateInput struct {
+	IncidentReportID string     `json:"incidentReportId"`
+	Type             NoticeType `json:"type"`
+	SLA              *int       `json:"sla"`
+	URL              string     `json:"url"`
+}
+
+type NoticeDeleteInput struct {
+	ID string `json:"id"`
+}
+
+type NoticeDeletePayload struct {
+	ID string `json:"id"`
+}
+
+type NoticePagination struct {
+	Limit int `json:"limit"`
+	Page  int `json:"page"`
+}
+
+type NoticeQueryInput struct {
+	ID string `json:"id"`
+}
+
+type NoticeUpdateInput struct {
+	ID               string      `json:"id"`
+	IncidentReportID *string     `json:"incidentReportId"`
+	Type             *NoticeType `json:"type"`
+	IssueDate        *int        `json:"issueDate"`
+	URL              *string     `json:"url"`
+	SLA              *int        `json:"sla"`
+	NoticeRead       *bool       `json:"noticeRead"`
+	NoticeSigned     *bool       `json:"noticeSigned"`
+}
+
+type NoticesPayload struct {
+	Notices []*Notice `json:"notices"`
+	Total   int       `json:"total"`
 }
 
 type RefreshTokenResponse struct {
@@ -223,4 +487,200 @@ type UsersCreateInput struct {
 type UsersPayload struct {
 	Users []*User `json:"users"`
 	Total int     `json:"total"`
+}
+
+type CaseStatusType string
+
+const (
+	CaseStatusTypeFiled               CaseStatusType = "FILED"
+	CaseStatusTypeCaseManagerAssigned CaseStatusType = "CASE_MANAGER_ASSIGNED"
+	CaseStatusTypeValidByCaseManager  CaseStatusType = "VALID_BY_CASE_MANAGER"
+	CaseStatusTypeIncompleteEvidence  CaseStatusType = "INCOMPLETE_EVIDENCE"
+	CaseStatusTypeNoDisciplinaryCase  CaseStatusType = "NO_DISCIPLINARY_CASE"
+	CaseStatusTypeLineManagerAssigned CaseStatusType = "LINE_MANAGER_ASSIGNED"
+	CaseStatusTypeValidByLineManager  CaseStatusType = "VALID_BY_LINE_MANAGER"
+	CaseStatusTypeNteDrafted          CaseStatusType = "NTE_DRAFTED"
+	CaseStatusTypeNteIssued           CaseStatusType = "NTE_ISSUED"
+	CaseStatusTypeRiderResponse       CaseStatusType = "RIDER_RESPONSE"
+	CaseStatusTypeAdminHearing        CaseStatusType = "ADMIN_HEARING"
+	CaseStatusTypeNodDrafted          CaseStatusType = "NOD_DRAFTED"
+	CaseStatusTypeNodIssued           CaseStatusType = "NOD_ISSUED"
+	CaseStatusTypeNowDrafted          CaseStatusType = "NOW_DRAFTED"
+	CaseStatusTypeNowIssued           CaseStatusType = "NOW_ISSUED"
+)
+
+var AllCaseStatusType = []CaseStatusType{
+	CaseStatusTypeFiled,
+	CaseStatusTypeCaseManagerAssigned,
+	CaseStatusTypeValidByCaseManager,
+	CaseStatusTypeIncompleteEvidence,
+	CaseStatusTypeNoDisciplinaryCase,
+	CaseStatusTypeLineManagerAssigned,
+	CaseStatusTypeValidByLineManager,
+	CaseStatusTypeNteDrafted,
+	CaseStatusTypeNteIssued,
+	CaseStatusTypeRiderResponse,
+	CaseStatusTypeAdminHearing,
+	CaseStatusTypeNodDrafted,
+	CaseStatusTypeNodIssued,
+	CaseStatusTypeNowDrafted,
+	CaseStatusTypeNowIssued,
+}
+
+func (e CaseStatusType) IsValid() bool {
+	switch e {
+	case CaseStatusTypeFiled, CaseStatusTypeCaseManagerAssigned, CaseStatusTypeValidByCaseManager, CaseStatusTypeIncompleteEvidence, CaseStatusTypeNoDisciplinaryCase, CaseStatusTypeLineManagerAssigned, CaseStatusTypeValidByLineManager, CaseStatusTypeNteDrafted, CaseStatusTypeNteIssued, CaseStatusTypeRiderResponse, CaseStatusTypeAdminHearing, CaseStatusTypeNodDrafted, CaseStatusTypeNodIssued, CaseStatusTypeNowDrafted, CaseStatusTypeNowIssued:
+		return true
+	}
+	return false
+}
+
+func (e CaseStatusType) String() string {
+	return string(e)
+}
+
+func (e *CaseStatusType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = CaseStatusType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid CaseStatusType", str)
+	}
+	return nil
+}
+
+func (e CaseStatusType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type EmployeeAccessRole string
+
+const (
+	EmployeeAccessRoleEmployee    EmployeeAccessRole = "EMPLOYEE"
+	EmployeeAccessRoleCaseManager EmployeeAccessRole = "CASE_MANAGER"
+	EmployeeAccessRoleLineManager EmployeeAccessRole = "LINE_MANAGER"
+	EmployeeAccessRoleSuper       EmployeeAccessRole = "SUPER"
+)
+
+var AllEmployeeAccessRole = []EmployeeAccessRole{
+	EmployeeAccessRoleEmployee,
+	EmployeeAccessRoleCaseManager,
+	EmployeeAccessRoleLineManager,
+	EmployeeAccessRoleSuper,
+}
+
+func (e EmployeeAccessRole) IsValid() bool {
+	switch e {
+	case EmployeeAccessRoleEmployee, EmployeeAccessRoleCaseManager, EmployeeAccessRoleLineManager, EmployeeAccessRoleSuper:
+		return true
+	}
+	return false
+}
+
+func (e EmployeeAccessRole) String() string {
+	return string(e)
+}
+
+func (e *EmployeeAccessRole) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = EmployeeAccessRole(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid EmployeeAccessRole", str)
+	}
+	return nil
+}
+
+func (e EmployeeAccessRole) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type IncidentReportType string
+
+const (
+	IncidentReportTypeMinor IncidentReportType = "MINOR"
+	IncidentReportTypeMajor IncidentReportType = "MAJOR"
+)
+
+var AllIncidentReportType = []IncidentReportType{
+	IncidentReportTypeMinor,
+	IncidentReportTypeMajor,
+}
+
+func (e IncidentReportType) IsValid() bool {
+	switch e {
+	case IncidentReportTypeMinor, IncidentReportTypeMajor:
+		return true
+	}
+	return false
+}
+
+func (e IncidentReportType) String() string {
+	return string(e)
+}
+
+func (e *IncidentReportType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = IncidentReportType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid IncidentReportType", str)
+	}
+	return nil
+}
+
+func (e IncidentReportType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type NoticeType string
+
+const (
+	NoticeTypeNoticeOfWarning  NoticeType = "NOTICE_OF_WARNING"
+	NoticeTypeNoticeToExplain  NoticeType = "NOTICE_TO_EXPLAIN"
+	NoticeTypeNoticeOfDecision NoticeType = "NOTICE_OF_DECISION"
+)
+
+var AllNoticeType = []NoticeType{
+	NoticeTypeNoticeOfWarning,
+	NoticeTypeNoticeToExplain,
+	NoticeTypeNoticeOfDecision,
+}
+
+func (e NoticeType) IsValid() bool {
+	switch e {
+	case NoticeTypeNoticeOfWarning, NoticeTypeNoticeToExplain, NoticeTypeNoticeOfDecision:
+		return true
+	}
+	return false
+}
+
+func (e NoticeType) String() string {
+	return string(e)
+}
+
+func (e *NoticeType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = NoticeType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid NoticeType", str)
+	}
+	return nil
+}
+
+func (e NoticeType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
 }

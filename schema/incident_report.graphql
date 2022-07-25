@@ -1,0 +1,73 @@
+type IncidentReport {
+  id: ID!
+  employeeId: ID!
+  caseManagerId: ID
+  lineMangerId: ID
+  coreSystemRiderId: ID
+  trackingId: Int!
+  incidentDetails: String!
+  incidentDate: Int!
+  evidenceReceiptDate: Int
+  remarks: String
+  type: IncidentReportType
+  url: String
+  preventiveSuspension: Boolean
+  dateOfAdministrativeHearing: Int
+  employee: Employee
+  caseManager: Employee
+  lineManger: Employee
+  createdAt: Int
+  deletedAt: Int
+  updatedAt: Int
+}
+
+enum IncidentReportType {
+  MINOR
+  MAJOR
+}
+
+input IncidentReportCreateInput {
+  employeeId: ID!
+  trackingId: Int!
+  incidentDetails: String!
+  incidentDate: Int!
+}
+
+input IncidentReportUpdateInput {
+  id: ID!
+  employeeId: ID
+  caseManagerId: ID
+  lineMangerId: ID
+  coreSystemRiderId: ID
+  trackingId: Int
+  incidentDetails: String
+  incidentDate: Int
+  evidenceReceiptDate: Int
+  remarks: String
+  type: IncidentReportType
+  url: String
+  preventiveSuspension: Boolean
+  dateOfAdministrativeHearing: Int
+}
+
+input IncidentReportDeleteInput {
+  id: ID!
+}
+
+type IncidentReportDeletePayload {
+  id: ID!
+}
+
+input IncidentReportQueryInput {
+  id: ID!
+}
+
+input IncidentReportPagination {
+  limit: Int!
+  page: Int!
+}
+
+type IncidentReportsPayload {
+  incidentReports: [IncidentReport!]!
+  total: Int!
+}

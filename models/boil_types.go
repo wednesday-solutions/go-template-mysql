@@ -50,3 +50,87 @@ func makeCacheKey(cols boil.Columns, nzDefaults []string) string {
 	strmangle.PutBuffer(buf)
 	return str
 }
+
+// Enum values for CaseStatusStatus
+const (
+	CaseStatusStatusFILED                 string = "FILED"
+	CaseStatusStatusCASE_MANAGER_ASSIGNED string = "CASE_MANAGER_ASSIGNED"
+	CaseStatusStatusVALID_BY_CASE_MANAGER string = "VALID_BY_CASE_MANAGER"
+	CaseStatusStatusINCOMPLETE_EVIDENCE   string = "INCOMPLETE_EVIDENCE"
+	CaseStatusStatusNO_DISCIPLINARY_CASE  string = "NO_DISCIPLINARY_CASE"
+	CaseStatusStatusLINE_MANAGER_ASSIGNED string = "LINE_MANAGER_ASSIGNED"
+	CaseStatusStatusVALID_BY_LINE_MANAGER string = "VALID_BY_LINE_MANAGER"
+	CaseStatusStatusNTE_DRAFTED           string = "NTE_DRAFTED"
+	CaseStatusStatusNTE_ISSUED            string = "NTE_ISSUED"
+	CaseStatusStatusRIDER_RESPONSE        string = "RIDER_RESPONSE"
+	CaseStatusStatusADMIN_HEARING         string = "ADMIN_HEARING"
+	CaseStatusStatusNOD_DRAFTED           string = "NOD_DRAFTED"
+	CaseStatusStatusNOD_ISSUED            string = "NOD_ISSUED"
+	CaseStatusStatusNOW_DRAFTED           string = "NOW_DRAFTED"
+	CaseStatusStatusNOW_ISSUED            string = "NOW_ISSUED"
+)
+
+func AllCaseStatusStatus() []string {
+	return []string{
+		CaseStatusStatusFILED,
+		CaseStatusStatusCASE_MANAGER_ASSIGNED,
+		CaseStatusStatusVALID_BY_CASE_MANAGER,
+		CaseStatusStatusINCOMPLETE_EVIDENCE,
+		CaseStatusStatusNO_DISCIPLINARY_CASE,
+		CaseStatusStatusLINE_MANAGER_ASSIGNED,
+		CaseStatusStatusVALID_BY_LINE_MANAGER,
+		CaseStatusStatusNTE_DRAFTED,
+		CaseStatusStatusNTE_ISSUED,
+		CaseStatusStatusRIDER_RESPONSE,
+		CaseStatusStatusADMIN_HEARING,
+		CaseStatusStatusNOD_DRAFTED,
+		CaseStatusStatusNOD_ISSUED,
+		CaseStatusStatusNOW_DRAFTED,
+		CaseStatusStatusNOW_ISSUED,
+	}
+}
+
+// Enum values for EmployeesEmployeeAccessRole
+const (
+	EmployeesEmployeeAccessRoleEMPLOYEE     string = "EMPLOYEE"
+	EmployeesEmployeeAccessRoleCASE_MANAGER string = "CASE_MANAGER"
+	EmployeesEmployeeAccessRoleLINE_MANAGER string = "LINE_MANAGER"
+	EmployeesEmployeeAccessRoleSUPER        string = "SUPER"
+)
+
+func AllEmployeesEmployeeAccessRole() []string {
+	return []string{
+		EmployeesEmployeeAccessRoleEMPLOYEE,
+		EmployeesEmployeeAccessRoleCASE_MANAGER,
+		EmployeesEmployeeAccessRoleLINE_MANAGER,
+		EmployeesEmployeeAccessRoleSUPER,
+	}
+}
+
+// Enum values for IncidentReportsType
+const (
+	IncidentReportsTypeMINOR string = "MINOR"
+	IncidentReportsTypeMAJOR string = "MAJOR"
+)
+
+func AllIncidentReportsType() []string {
+	return []string{
+		IncidentReportsTypeMINOR,
+		IncidentReportsTypeMAJOR,
+	}
+}
+
+// Enum values for NoticesType
+const (
+	NoticesTypeNOTICE_OF_WARNING  string = "NOTICE_OF_WARNING"
+	NoticesTypeNOTICE_TO_EXPLAIN  string = "NOTICE_TO_EXPLAIN"
+	NoticesTypeNOTICE_OF_DECISION string = "NOTICE_OF_DECISION"
+)
+
+func AllNoticesType() []string {
+	return []string{
+		NoticesTypeNOTICE_OF_WARNING,
+		NoticesTypeNOTICE_TO_EXPLAIN,
+		NoticesTypeNOTICE_OF_DECISION,
+	}
+}

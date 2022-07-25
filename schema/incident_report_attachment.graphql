@@ -1,0 +1,41 @@
+type IncidentReportAttachment {
+  id: ID!
+  incidentReportId: ID!
+  url: String!
+  createdAt: Int
+  deletedAt: Int
+  updatedAt: Int
+}
+
+input IncidentReportAttachmentCreateInput {
+  incidentReportId: ID!
+  url: String!
+}
+
+input IncidentReportAttachmentUpdateInput {
+  id: ID!
+  incidentReportId: ID!
+  url: String!
+}
+
+input IncidentReportAttachmentDeleteInput {
+  id: ID!
+}
+
+type IncidentReportAttachmentDeletePayload {
+  id: ID!
+}
+
+input IncidentReportAttachmentQueryInput {
+  id: ID!
+}
+
+input IncidentReportAttachmentPagination {
+  limit: Int!
+  page: Int!
+}
+
+type IncidentReportAttachmentsPayload {
+  incidentReportAttachments: [IncidentReportAttachment!]!
+  total: Int!
+}

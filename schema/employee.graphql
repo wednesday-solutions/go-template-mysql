@@ -2,13 +2,13 @@ type Employee {
   id: ID!
   name: String
   email: String
-  role: ERole
+  employeeAccessRole: EmployeeAccessRole
   createdAt: Int
   deletedAt: Int
   updatedAt: Int
 }
 
-enum ERole {
+enum EmployeeAccessRole {
   EMPLOYEE
   CASE_MANAGER
   LINE_MANAGER
@@ -18,17 +18,25 @@ enum ERole {
 input EmployeeCreateInput {
   name: String!
   email: String!
-  role: ERole
+  employeeAccessRole: EmployeeAccessRole
 }
 
 input EmployeeUpdateInput {
   id: ID!
   name: String
   email: String
-  role: ERole
+  employeeAccessRole: EmployeeAccessRole
+}
+
+input EmployeeDeleteInput {
+  id: ID!
 }
 
 type EmployeeDeletePayload {
+  id: ID!
+}
+
+input EmployeeQueryInput {
   id: ID!
 }
 
