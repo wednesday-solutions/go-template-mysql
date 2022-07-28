@@ -22,7 +22,7 @@ require (
 	github.com/nbutton23/zxcvbn-go v0.0.0-20180912185939-ae427f1e4c1d
 	github.com/rafaeljusto/redigomock v2.4.0+incompatible
 	github.com/rafaeljusto/redigomock/v3 v3.0.1
-	github.com/rs/zerolog v1.18.0
+	github.com/rs/zerolog v1.26.1
 	github.com/rubenv/sql-migrate v1.1.2
 	github.com/spf13/viper v1.10.0
 	github.com/stretchr/testify v1.7.1
@@ -31,8 +31,8 @@ require (
 	github.com/volatiletech/randomize v0.0.1
 	github.com/volatiletech/sqlboiler v3.7.1+incompatible
 	github.com/volatiletech/sqlboiler/v4 v4.8.6
-	github.com/volatiletech/strmangle v0.0.2
-	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
+	github.com/volatiletech/strmangle v0.0.4
+	golang.org/x/crypto v0.0.0-20211215165025-cf75a172585e
 )
 
 require (

@@ -14,8 +14,8 @@ input IncidentReportAttachmentCreateInput {
 
 input IncidentReportAttachmentUpdateInput {
   id: ID!
-  incidentReportId: ID!
-  url: String!
+  incidentReportId: ID
+  url: String
 }
 
 input IncidentReportAttachmentDeleteInput {

@@ -184,9 +184,9 @@ type IncidentReportAttachmentQueryInput struct {
 }
 
 type IncidentReportAttachmentUpdateInput struct {
-	ID               string `json:"id"`
-	IncidentReportID string `json:"incidentReportId"`
-	URL              string `json:"url"`
+	ID               string  `json:"id"`
+	IncidentReportID *string `json:"incidentReportId"`
+	URL              *string `json:"url"`
 }
 
 type IncidentReportAttachmentsPayload struct {
@@ -497,8 +497,6 @@ const (
 	CaseStatusTypeValidByCaseManager  CaseStatusType = "VALID_BY_CASE_MANAGER"
 	CaseStatusTypeIncompleteEvidence  CaseStatusType = "INCOMPLETE_EVIDENCE"
 	CaseStatusTypeNoDisciplinaryCase  CaseStatusType = "NO_DISCIPLINARY_CASE"
-	CaseStatusTypeLineManagerAssigned CaseStatusType = "LINE_MANAGER_ASSIGNED"
-	CaseStatusTypeValidByLineManager  CaseStatusType = "VALID_BY_LINE_MANAGER"
 	CaseStatusTypeNteDrafted          CaseStatusType = "NTE_DRAFTED"
 	CaseStatusTypeNteIssued           CaseStatusType = "NTE_ISSUED"
 	CaseStatusTypeRiderResponse       CaseStatusType = "RIDER_RESPONSE"
@@ -515,8 +513,6 @@ var AllCaseStatusType = []CaseStatusType{
 	CaseStatusTypeValidByCaseManager,
 	CaseStatusTypeIncompleteEvidence,
 	CaseStatusTypeNoDisciplinaryCase,
-	CaseStatusTypeLineManagerAssigned,
-	CaseStatusTypeValidByLineManager,
 	CaseStatusTypeNteDrafted,
 	CaseStatusTypeNteIssued,
 	CaseStatusTypeRiderResponse,
@@ -529,7 +525,7 @@ var AllCaseStatusType = []CaseStatusType{
 
 func (e CaseStatusType) IsValid() bool {
 	switch e {
-	case CaseStatusTypeFiled, CaseStatusTypeCaseManagerAssigned, CaseStatusTypeValidByCaseManager, CaseStatusTypeIncompleteEvidence, CaseStatusTypeNoDisciplinaryCase, CaseStatusTypeLineManagerAssigned, CaseStatusTypeValidByLineManager, CaseStatusTypeNteDrafted, CaseStatusTypeNteIssued, CaseStatusTypeRiderResponse, CaseStatusTypeAdminHearing, CaseStatusTypeNodDrafted, CaseStatusTypeNodIssued, CaseStatusTypeNowDrafted, CaseStatusTypeNowIssued:
+	case CaseStatusTypeFiled, CaseStatusTypeCaseManagerAssigned, CaseStatusTypeValidByCaseManager, CaseStatusTypeIncompleteEvidence, CaseStatusTypeNoDisciplinaryCase, CaseStatusTypeNteDrafted, CaseStatusTypeNteIssued, CaseStatusTypeRiderResponse, CaseStatusTypeAdminHearing, CaseStatusTypeNodDrafted, CaseStatusTypeNodIssued, CaseStatusTypeNowDrafted, CaseStatusTypeNowIssued:
 		return true
 	}
 	return false

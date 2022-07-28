@@ -1,5 +1,7 @@
 extend type Mutation {
+  "Description for"
   createEmployee(input: EmployeeCreateInput!): Employee!
-  updateEmployee(input: EmployeeUpdateInput): Employee!
+  "Description for argument"
+  updateEmployee(input: EmployeeUpdateInput!): Employee!
   deleteEmployee(input: EmployeeDeleteInput!): EmployeeDeletePayload!
 }

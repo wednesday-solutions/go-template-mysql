@@ -38,7 +38,7 @@ func (r *mutationResolver) CreateEmployee(ctx context.Context, input gqlmodels.E
 }
 
 // UpdateEmployee is the resolver for the updateEmployee field.
-func (r *mutationResolver) UpdateEmployee(ctx context.Context, input *gqlmodels.EmployeeUpdateInput) (*gqlmodels.Employee, error) {
+func (r *mutationResolver) UpdateEmployee(ctx context.Context, input gqlmodels.EmployeeUpdateInput) (*gqlmodels.Employee, error) {
 	employee, err := daos.FindEmployeeByID(convert.StringToInt(input.ID))
 	if err != nil {
 		return nil, resultwrapper.ResolverWrapperFromMessage(404, "employee not found")

@@ -161,7 +161,7 @@ type ComplexityRoot struct {
 		Login                          func(childComplexity int, username string, password string) int
 		RefreshToken                   func(childComplexity int, token string) int
 		UpdateCaseStatus               func(childComplexity int, input CaseStatusUpdateInput) int
-		UpdateEmployee                 func(childComplexity int, input *EmployeeUpdateInput) int
+		UpdateEmployee                 func(childComplexity int, input EmployeeUpdateInput) int
 		UpdateIncidentReport           func(childComplexity int, input IncidentReportUpdateInput) int
 		UpdateIncidentReportAttachment func(childComplexity int, input IncidentReportAttachmentUpdateInput) int
 		UpdateNotice                   func(childComplexity int, input NoticeUpdateInput) int
@@ -285,7 +285,7 @@ type MutationResolver interface {
 	UpdateCaseStatus(ctx context.Context, input CaseStatusUpdateInput) (*CaseStatus, error)
 	DeleteCaseStatus(ctx context.Context, input CaseStatusDeleteInput) (*CaseStatusDeletePayload, error)
 	CreateEmployee(ctx context.Context, input EmployeeCreateInput) (*Employee, error)
-	UpdateEmployee(ctx context.Context, input *EmployeeUpdateInput) (*Employee, error)
+	UpdateEmployee(ctx context.Context, input EmployeeUpdateInput) (*Employee, error)
 	DeleteEmployee(ctx context.Context, input EmployeeDeleteInput) (*EmployeeDeletePayload, error)
 	CreateIncidentReportAttachemnt(ctx context.Context, input IncidentReportAttachmentCreateInput) (*IncidentReportAttachment, error)
 	UpdateIncidentReportAttachment(ctx context.Context, input IncidentReportAttachmentUpdateInput) (*IncidentReportAttachment, error)
@@ -935,7 +935,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdateEmployee(childComplexity, args["input"].(*EmployeeUpdateInput)), true
+		return e.complexity.Mutation.UpdateEmployee(childComplexity, args["input"].(EmployeeUpdateInput)), true
 
 	case "Mutation.updateIncidentReport":
 		if e.complexity.Mutation.UpdateIncidentReport == nil {
@@ -1609,8 +1609,8 @@ enum CaseStatusType {
   VALID_BY_CASE_MANAGER
   INCOMPLETE_EVIDENCE
   NO_DISCIPLINARY_CASE
-  LINE_MANAGER_ASSIGNED
-  VALID_BY_LINE_MANAGER
+  #   LINE_MANAGER_ASSIGNED
+  #   VALID_BY_LINE_MANAGER
   NTE_DRAFTED
   NTE_ISSUED
   RIDER_RESPONSE
@@ -1722,8 +1722,10 @@ type EmployeesPayload {
 }
 `, BuiltIn: false},
 	{Name: "../schema/employee_mutations.graphql", Input: `extend type Mutation {
+  "Description for"
   createEmployee(input: EmployeeCreateInput!): Employee!
-  updateEmployee(input: EmployeeUpdateInput): Employee!
+  "Description for argument"
+  updateEmployee(input: EmployeeUpdateInput!): Employee!
   deleteEmployee(input: EmployeeDeleteInput!): EmployeeDeletePayload!
 }
 `, BuiltIn: false},
@@ -1880,8 +1882,8 @@ input IncidentReportAttachmentCreateInput {
 
 input IncidentReportAttachmentUpdateInput {
   id: ID!
-  incidentReportId: ID!
-  url: String!
+  incidentReportId: ID
+  url: String
 }
 
 input IncidentReportAttachmentDeleteInput {
@@ -2459,10 +2461,10 @@ func (ec *executionContext) field_Mutation_updateCaseStatus_args(ctx context.Con
 func (ec *executionContext) field_Mutation_updateEmployee_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 *EmployeeUpdateInput
+	var arg0 EmployeeUpdateInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalOEmployeeUpdateInput2ᚖgoᚑtemplateᚋgqlmodelsᚐEmployeeUpdateInput(ctx, tmp)
+		arg0, err = ec.unmarshalNEmployeeUpdateInput2goᚑtemplateᚋgqlmodelsᚐEmployeeUpdateInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -5739,7 +5741,7 @@ func (ec *executionContext) _Mutation_updateEmployee(ctx context.Context, field 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().UpdateEmployee(rctx, fc.Args["input"].(*EmployeeUpdateInput))
+		return ec.resolvers.Mutation().UpdateEmployee(rctx, fc.Args["input"].(EmployeeUpdateInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -12527,7 +12529,7 @@ func (ec *executionContext) unmarshalInputIncidentReportAttachmentUpdateInput(ct
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("incidentReportId"))
-			it.IncidentReportID, err = ec.unmarshalNID2string(ctx, v)
+			it.IncidentReportID, err = ec.unmarshalOID2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -12535,7 +12537,7 @@ func (ec *executionContext) unmarshalInputIncidentReportAttachmentUpdateInput(ct
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("url"))
-			it.URL, err = ec.unmarshalNString2string(ctx, v)
+			it.URL, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -16262,6 +16264,11 @@ func (ec *executionContext) unmarshalNEmployeeQueryInput2goᚑtemplateᚋgqlmode
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) unmarshalNEmployeeUpdateInput2goᚑtemplateᚋgqlmodelsᚐEmployeeUpdateInput(ctx context.Context, v interface{}) (EmployeeUpdateInput, error) {
+	res, err := ec.unmarshalInputEmployeeUpdateInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) marshalNEmployeesPayload2goᚑtemplateᚋgqlmodelsᚐEmployeesPayload(ctx context.Context, sel ast.SelectionSet, v EmployeesPayload) graphql.Marshaler {
 	return ec._EmployeesPayload(ctx, sel, &v)
 }
@@ -17271,14 +17278,6 @@ func (ec *executionContext) unmarshalOEmployeePagination2ᚖgoᚑtemplateᚋgqlm
 		return nil, nil
 	}
 	res, err := ec.unmarshalInputEmployeePagination(ctx, v)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) unmarshalOEmployeeUpdateInput2ᚖgoᚑtemplateᚋgqlmodelsᚐEmployeeUpdateInput(ctx context.Context, v interface{}) (*EmployeeUpdateInput, error) {
-	if v == nil {
-		return nil, nil
-	}
-	res, err := ec.unmarshalInputEmployeeUpdateInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
