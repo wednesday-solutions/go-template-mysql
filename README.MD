@@ -88,7 +88,7 @@ go run cmd/server/main.go
 
 # Setting up database (mysql)
 
-- Requirement [postgresql](https://www.postgresql.org/)
+- Requirement [mysql](https://dev.mysql.com/doc/mysql-getting-started/en/)
   
 Steps to set up database with ```username``` and ```role``` using terminal
 
@@ -190,7 +190,7 @@ go-template/
 
 generate your database models
 ```
-sqlboiler psql --no-hooks
+sqlboiler mysql --no-hooks
 ```
 
 # graphQL

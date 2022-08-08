@@ -80,11 +80,11 @@ func LoadEnv() error {
 			return err
 		}
 
-		os.Setenv("PSQL_DBNAME", secrets.DBName)
-		os.Setenv("PSQL_HOST", secrets.Host)
-		os.Setenv("PSQL_PASS", secrets.Password)
-		os.Setenv("PSQL_PORT", strconv.Itoa(secrets.Port))
-		os.Setenv("PSQL_USER", secrets.Username)
+		os.Setenv("MYSQL_DBNAME", secrets.DBName)
+		os.Setenv("MYSQL_HOST", secrets.Host)
+		os.Setenv("MYSQL_PASS", secrets.Password)
+		os.Setenv("MYSQL_PORT", strconv.Itoa(secrets.Port))
+		os.Setenv("MYSQL_USER", secrets.Username)
 
 	}
 

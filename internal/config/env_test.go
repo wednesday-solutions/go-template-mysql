@@ -229,11 +229,11 @@ func TestLoadEnv(t *testing.T) {
 			}
 			assert.Equal(t, tapped, !tt.args.tapped)
 			if tt.args.dbSecret != "" {
-				assert.Equal(t, os.Getenv("PSQL_USER"), username)
-				assert.Equal(t, os.Getenv("PSQL_HOST"), host)
-				assert.Equal(t, os.Getenv("PSQL_DBNAME"), dbname)
-				assert.Equal(t, os.Getenv("PSQL_PASS"), password)
-				assert.Equal(t, os.Getenv("PSQL_PORT"), port)
+				assert.Equal(t, os.Getenv("MYSQL_USER"), username)
+				assert.Equal(t, os.Getenv("MYSQL_HOST"), host)
+				assert.Equal(t, os.Getenv("MYSQL_DBNAME"), dbname)
+				assert.Equal(t, os.Getenv("MYSQL_PASS"), password)
+				assert.Equal(t, os.Getenv("MYSQL_PORT"), port)
 			}
 		})
 	}
