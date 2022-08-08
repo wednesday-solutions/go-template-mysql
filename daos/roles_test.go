@@ -1,6 +1,7 @@
 package daos_test
 
 import (
+	"context"
 	"fmt"
 	"regexp"
 	"testing"
@@ -55,7 +56,7 @@ func TestCreateRoleTx(t *testing.T) {
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		t.Run(tt.name, func(t *testing.T) {
-			res, err := daos.CreateRoleTx(tt.req, nil)
+			res, err := daos.CreateRole(tt.req, context.Background())
 			if err != nil {
 				assert.Equal(t, true, tt.err != nil)
 			} else {
@@ -106,7 +107,7 @@ func TestFindRoleByID(t *testing.T) {
 			WillReturnRows(rows)
 
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := daos.FindRoleByID(tt.req)
+			_, err := daos.FindRoleByID(tt.req, context.Background())
 			assert.Equal(t, err, tt.err)
 
 		})

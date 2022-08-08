@@ -1,16 +1,12 @@
-#!/bin/bash
-set -a
-source .env.local
-set +a
+#!/bin/sh
+set -a && source .env.local && set +a
 
 export MYSQL_HOST=localhost
-# drop tables
-sql-migrate down -env mysql -limit=0
+# drop first
+go run ./cmd/migrations/main.go down
 
 # run migrations
-sql-migrate up -env mysql
-sql-migrate status -env mysql
+go run ./cmd/migrations/main.go
 
 # seed data
-
-./scripts/seed.sh
+go run ./cmd/seeder/main.go
