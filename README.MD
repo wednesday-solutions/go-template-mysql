@@ -57,6 +57,9 @@ The Go template MySQL is a template/starter go project.
 - Paginated endpoints
 - Simplified support for migrations and seeders
 - DAO layer for all database interactions
+- Distributed tracing
+- Monitoring
+- Alerts
 
 ## Getting started
 
@@ -85,7 +88,7 @@ go run cmd/server/main.go
 
 # Setting up database (mysql)
 
-- Requirement [postgresql](https://www.postgresql.org/)
+- Requirement [mysql](https://dev.mysql.com/doc/mysql-getting-started/en/)
   
 Steps to set up database with ```username``` and ```role``` using terminal
 
@@ -98,10 +101,13 @@ Steps to set up database with ```username``` and ```role``` using terminal
 
 To ease the development process a make file is provided
 
-- **`make local`**  
+- **`make docker`**  
   Requires `.env.local` file to be present and set  
   This starts the containers in `local` stage, bind the `current directory` to `/go/src/server` inside the `go-template_server_1` container and then starts the `terminal` inside `go-template_server_1`. Once the development is over, `exit` the terminal and call `make tear env=local` to stop all the containers
 
+# Setting up Signoz
+
+Set up signoz locally by following the steps [here](https://signoz.io/docs/install/docker)
 # Running migrations
 
 Migrations are present in ```internal/migrations``` package. Run below command to run all migrations at once:
@@ -157,7 +163,7 @@ go-template/
 │     └──rediscache/                # this package has functionality for accessing and using redis
 │     └──resultwrapper/             # this package exports the custom errors produced by application
 │     └──secure/                    # this package has password related functionalities
-│     └──zlog/                      # this package has setup for zerolog logger
+│     └──zap/                       # this package has setup for uber-go zap logger
 └──resolver/                        # this directory will contain resolvers to populate info for graphQL queries, mutations and subscriptions
 └──scripts/                         # this directory will contain different utility scripts
 │  └──setup-local.sh                # script to set up database and run the app locally
@@ -184,7 +190,7 @@ go-template/
 
 generate your database models
 ```
-sqlboiler psql --no-hooks
+sqlboiler mysql --no-hooks
 ```
 
 # graphQL

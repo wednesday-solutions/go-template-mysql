@@ -4,3 +4,7 @@ vendor
 .DS_Store
 profile.out
 coverage.out
+output
+.env.develop
+.env.qa
+.env

@@ -17,17 +17,24 @@ import (
 	null "github.com/volatiletech/null/v8"
 )
 
+func loadConfig() (*config.Configuration, error) {
+	cfg, err := config.Load()
+	if err != nil {
+		return nil, fmt.Errorf("error in loading config")
+	}
+	return cfg, nil
+}
+
 // Login is the resolver for the login field.
 func (r *mutationResolver) Login(ctx context.Context, username string, password string) (*gqlmodels.LoginResponse, error) {
-	u, err := daos.FindUserByUserName(username)
-
+	u, err := daos.FindUserByUserName(username, ctx)
 	if err != nil {
 		return nil, err
 	}
 	// loading configurations
-	cfg, err := config.Load()
+	cfg, err := loadConfig()
 	if err != nil {
-		return nil, fmt.Errorf("error in loading config ")
+		return nil, err
 	}
 	// creating new secure and token generation service
 	sec := service.Secure(cfg)
@@ -52,7 +59,7 @@ func (r *mutationResolver) Login(ctx context.Context, username string, password 
 
 	refreshToken := sec.Token(token)
 	u.Token = null.StringFrom(refreshToken)
-	_, err = daos.UpdateUserTx(*u, nil)
+	_, err = daos.UpdateUser(*u, ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -67,15 +74,15 @@ func (r *mutationResolver) ChangePassword(
 	newPassword string,
 ) (*gqlmodels.ChangePasswordResponse, error) {
 	userID := auth.UserIDFromContext(ctx)
-	u, err := daos.FindUserByID(userID)
+	u, err := daos.FindUserByID(userID, ctx)
 	if err != nil {
 		return nil, resultwrapper.ResolverSQLError(err, "data")
 	}
 
 	// loading configurations
-	cfg, err := config.Load()
+	cfg, err := loadConfig()
 	if err != nil {
-		return nil, fmt.Errorf("error in loading config ")
+		return nil, err
 	}
 	// creating new secure service
 	sec := service.Secure(cfg)
@@ -92,7 +99,7 @@ func (r *mutationResolver) ChangePassword(
 	}
 
 	u.Password = null.StringFrom(sec.Hash(newPassword))
-	_, err = daos.UpdateUserTx(*u, nil)
+	_, err = daos.UpdateUser(*u, ctx)
 	if err != nil {
 		return nil, resultwrapper.ResolverSQLError(err, "new information")
 	}
@@ -101,14 +108,14 @@ func (r *mutationResolver) ChangePassword(
 
 // RefreshToken is the resolver for the refreshToken field.
 func (r *mutationResolver) RefreshToken(ctx context.Context, token string) (*gqlmodels.RefreshTokenResponse, error) {
-	user, err := daos.FindUserByToken(token)
+	user, err := daos.FindUserByToken(token, ctx)
 	if err != nil {
 		return nil, resultwrapper.ResolverSQLError(err, "token")
 	}
 	// loading configurations
-	cfg, err := config.Load()
+	cfg, err := loadConfig()
 	if err != nil {
-		return nil, fmt.Errorf("error in loading config ")
+		return nil, err
 	}
 	// creating new secure and token generation service
 	tg, err := service.JWT(cfg)

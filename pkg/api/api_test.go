@@ -26,11 +26,13 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	. "github.com/agiledragon/gomonkey/v2"
 	"github.com/gorilla/websocket"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	_ "github.com/lib/pq"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 )
+
+var graphQLPathname = "/graphql"
 
 func TestStart(t *testing.T) {
 	type args struct {
@@ -70,12 +72,13 @@ func TestStart(t *testing.T) {
 		},
 	}
 
-	ApplyFunc(os.Getenv, func(key string) (value string) {
+	patches := ApplyFunc(os.Getenv, func(key string) (value string) {
 		if key == "JWT_SECRET" {
 			return testutls.MockJWTSecret
 		}
 		return ""
 	})
+	defer patches.Reset()
 	ApplyFunc(sql.Open, func(driverName string, dataSourceName string) (*sql.DB, error) {
 		fmt.Print("sql.Open called\n")
 		return nil, nil
@@ -153,7 +156,7 @@ func TestStart(t *testing.T) {
 				}
 				jsonRes, err := testutls.MakeRequest(testutls.RequestParameters{
 					E:           e,
-					Pathname:    "/graphql",
+					Pathname:    graphQLPathname,
 					HttpMethod:  "POST",
 					RequestBody: testutls.MockWhitelistedQuery,
 					IsGraphQL:   false,
@@ -183,7 +186,7 @@ func TestStart(t *testing.T) {
 				// check if the playground is returned
 				assert.Contains(t, string(bodyBytes), "GraphiQL.createFetcher")
 				ts := httptest.NewServer(e)
-				u := "ws" + strings.TrimPrefix(ts.URL+"/graphql", "http")
+				u := "ws" + strings.TrimPrefix(ts.URL+graphQLPathname, "http")
 
 				// Connect to the server
 				fmt.Print(u)

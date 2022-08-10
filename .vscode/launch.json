@@ -18,6 +18,7 @@
       "type": "go",
       "request": "launch",
       "mode": "auto",
+      "cwd": "./",
       "program": "${cwd}/cmd/server/main.go",
       "env": {
         "MYSQL_DBNAME": "go_template",
