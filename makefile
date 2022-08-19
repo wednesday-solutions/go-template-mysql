@@ -14,3 +14,4 @@ docker-up:
 	-f docker-compose.yml up
 
 docker: docker-down docker-build docker-up
+	
