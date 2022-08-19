@@ -12,9 +12,9 @@ import (
 	"go-template/internal/middleware/auth"
 	"go-template/internal/service"
 	"go-template/models"
-	"go-template/pkg/utl/convert"
-	"go-template/pkg/utl/resultwrapper"
-	"go-template/pkg/utl/throttle"
+	"go-template/pkg/utl/cnvrttogql"
+	resultwrapper "go-template/pkg/utl/resultwrapper"
+	throttle "go-template/pkg/utl/throttle"
 	"strconv"
 	"time"
 
@@ -49,7 +49,7 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input gqlmodels.UserC
 	if err != nil {
 		return nil, resultwrapper.ResolverSQLError(err, "user information")
 	}
-	graphUser := convert.UserToGraphQlUser(&newUser, 1)
+	graphUser := cnvrttogql.UserToGraphQlUser(&newUser, 1)
 
 	r.Lock()
 	for _, observer := range r.Observers {
@@ -63,10 +63,7 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input gqlmodels.UserC
 // UpdateUser is the resolver for the updateUser field.
 func (r *mutationResolver) UpdateUser(ctx context.Context, input *gqlmodels.UserUpdateInput) (*gqlmodels.User, error) {
 	userID := auth.UserIDFromContext(ctx)
-	user, err := daos.FindUserByID(userID, ctx)
-	if err != nil {
-		return nil, resultwrapper.ResolverWrapperFromMessage(404, "user not found")
-	}
+	user, _ := daos.FindUserByID(userID, ctx)
 	var u models.User
 	if user != nil {
 		u = *user
@@ -85,13 +82,12 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, input *gqlmodels.User
 	if input.Address != nil {
 		u.Address = null.StringFromPtr(input.Address)
 	}
-
-	u, err = daos.UpdateUser(u, ctx)
+	_, err := daos.UpdateUser(u, ctx)
 	if err != nil {
 		return nil, resultwrapper.ResolverSQLError(err, "new information")
 	}
 
-	graphUser := convert.UserToGraphQlUser(&u, 1)
+	graphUser := cnvrttogql.UserToGraphQlUser(&u, 1)
 	r.Lock()
 	for _, observer := range r.Observers {
 		observer <- graphUser

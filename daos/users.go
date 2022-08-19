@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"go-template/models"
+	models "go-template/models"
 
 	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
