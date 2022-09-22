@@ -34,7 +34,7 @@ func runMigration(db *sql.DB, direction migrate.MigrationDirection) {
 	}
 	n, err := migrate.Exec(db, "mysql", migrations, direction)
 	if err != nil {
-		fmt.Println("failed while executing migration")
+		fmt.Println("failed while executing migration", err)
 	}
 	fmt.Printf("Applied %d migrations!\n", n)
 }
