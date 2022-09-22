@@ -23,7 +23,7 @@ func main() {
 	}
 
 	for _, file := range files {
-		if slices.Contains([]string{"main.go", "utls"}, file.Name()) {
+		if slices.Contains([]string{"main.go", "utls", "v1", "v2"}, file.Name()) {
 			continue
 		}
 
