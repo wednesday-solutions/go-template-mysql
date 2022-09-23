@@ -1,0 +1,44 @@
+type Post {
+     id: ID!
+     title: String!
+     author: Author!
+}
+
+type Author {
+     id: ID!
+     firstName: String
+     lastName: String
+     username: String
+     password: String
+     active: Boolean
+     token: String
+}
+
+type Query {
+     posts: [Post!]!
+}
+
+input NewPost {
+     title: String!
+}
+
+input RefreshTokenInput {
+     token: String!
+}
+
+input NewAuthor {
+     username: String!
+     password: String!
+}
+
+input Login {
+     username: String!
+     password: String!
+}
+
+type Mutation {
+     createPost(input: NewPost!): Post!
+     createAuthor(input: NewAuthor!): Author!
+     login(input: Login!): String!
+     refreshToken(input: RefreshTokenInput!): String!
+}

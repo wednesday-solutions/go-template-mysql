@@ -1,14 +1,19 @@
 -- +migrate Up
 -- SQL in section 'Up' is executed when this migration is applied
-CREATE TABLE roles (
+CREATE TABLE authors (
 			id INT AUTO_INCREMENT PRIMARY KEY,
-			access_level int NOT NULL,
-			name text  NOT NULL,
-			created_at TIMESTAMP,
+			first_name TEXT,
+			last_name TEXT,
+			username VARCHAR(100) UNIQUE,
+			password TEXT,
+			active BOOLEAN,
+			token TEXT,
+			created_at TIMESTAMP DEFAULT NOW(),
 			updated_at TIMESTAMP,
 			deleted_at TIMESTAMP
 		);
+CREATE INDEX username_idx ON authors(username);
 
 -- +migrate Down
 -- SQL section 'Down' is executed when this migration is rolled back
-DROP TABLE roles;
+DROP TABLE authors;
