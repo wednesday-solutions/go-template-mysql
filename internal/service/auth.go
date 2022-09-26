@@ -2,10 +2,10 @@ package service
 
 import (
 	"crypto/sha1"
-	"os"
+	// "os"
 
 	"go-template/internal/config"
-	"go-template/internal/jwt"
+	// "go-template/internal/jwt"
 	"go-template/pkg/utl/secure"
 )
 
@@ -15,6 +15,6 @@ func Secure(cfg *config.Configuration) *secure.Service {
 }
 
 // JWT returns new JWT service
-func JWT(cfg *config.Configuration) (jwt.Service, error) {
-	return jwt.New(cfg.JWT.SigningAlgorithm, os.Getenv("JWT_SECRET"), cfg.JWT.DurationMinutes, cfg.JWT.MinSecretLength)
-}
+// func JWT(cfg *config.Configuration) (jwt.Service, error) {
+// 	return jwt.New(cfg.JWT.SigningAlgorithm, os.Getenv("JWT_SECRET"), cfg.JWT.DurationMinutes, cfg.JWT.MinSecretLength)
+// }

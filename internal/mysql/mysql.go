@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"go-template/pkg/utl/zaplog"
-	"go-template/testutls"
+	// "go-template/testutls"
 	"os"
 
 	// DB adapter
@@ -17,9 +17,9 @@ import (
 func Connect() (*sql.DB, error) {
 	dsn := GetDSN()
 	zaplog.Logger.Info("Connecting to DB\n", dsn)
-	if testutls.IsInTests() {
-		return sql.Open("mysql", dsn)
-	}
+	// if testutls.IsInTests() {
+	// 	return sql.Open("mysql", dsn)
+	// }
 	return otelsql.Open("mysql", dsn, otelsql.WithAttributes(semconv.DBSystemMySQL))
 }
 

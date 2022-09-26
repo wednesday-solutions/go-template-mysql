@@ -49,17 +49,17 @@ type args struct {
 }
 
 func initValues(shutDownFailed bool, startServer func(e *echo.Echo, s *http.Server) error) args {
-	config := testutls.MockConfig()
+	// config := testutls.MockConfig()
 	return args{
-		e: server.New(),
-		cfg: &server.Config{
-			Port:                config.Server.Port,
-			ReadTimeoutSeconds:  config.Server.ReadTimeout,
-			WriteTimeoutSeconds: config.Server.WriteTimeout,
-			Debug:               config.Server.Debug,
-		},
-		startServer:    startServer,
-		shutDownFailed: true,
+		// e: server.New(),
+		// cfg: &server.Config{
+		// 	Port:                config.Server.Port,
+		// 	ReadTimeoutSeconds:  config.Server.ReadTimeout,
+		// 	WriteTimeoutSeconds: config.Server.WriteTimeout,
+		// 	Debug:               config.Server.Debug,
+		// },
+		// startServer:    startServer,
+		// shutDownFailed: true,
 	}
 }
 func TestStart(t *testing.T) {
