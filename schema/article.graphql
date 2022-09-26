@@ -1,0 +1,7 @@
+type Article {
+     id: ID!
+     title: String
+     createAt: Int
+     updatedAt: Int
+     deletedAt: Int
+}

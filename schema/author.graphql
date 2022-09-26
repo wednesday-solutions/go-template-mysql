@@ -1,0 +1,12 @@
+type Author {
+     id: ID!
+     firstName: String
+     lastName: String
+     username: String
+     password: String
+     active: Boolean
+     articles: [Article]!
+     createAt: Int
+     updatedAt: Int
+     deletedAt: Int
+}

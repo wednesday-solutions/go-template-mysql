@@ -1,0 +1,4 @@
+extend type Query {
+     article(id: Int!): Article!
+     allArticles: [Article!]!
+}
