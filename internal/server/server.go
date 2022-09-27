@@ -79,6 +79,7 @@ type Config struct {
 
 // Start starts echo server
 func Start(e *echo.Echo, cfg *Config) {
+
 	tp := tracer.Init()
 	s := &http.Server{
 		Addr:         cfg.Port,

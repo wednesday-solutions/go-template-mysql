@@ -16,7 +16,7 @@ import (
 // Connect ...
 func Connect() (*sql.DB, error) {
 	dsn := GetDSN()
-	zaplog.Logger.Info("Connecting to DB\n", dsn)
+	zaplog.Logger.Info("Connecting to DB\n")
 	// if testutls.IsInTests() {
 	// 	return sql.Open("mysql", dsn)
 	// }

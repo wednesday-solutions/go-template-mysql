@@ -4,32 +4,32 @@ import (
 	"fmt"
 	"os"
 
-	// "go-template/pkg/utl/convert"
+	"go-template/pkg/utl/convert"
 )
 
 // Load returns Configuration struct
 func Load() (*Configuration, error) {
 	cfg := &Configuration{
-		// Server: &Server{
-		// 	Port:         fmt.Sprintf(":%d", convert.StringToInt(os.Getenv("SERVER_PORT"))),
-		// 	Debug:        convert.StringToBool(os.Getenv("SERVER_DEBUG")),
-		// 	ReadTimeout:  convert.StringToInt(os.Getenv("SERVER_READ_TIMEOUT")),
-		// 	WriteTimeout: convert.StringToInt(os.Getenv("SERVER_WRITE_TIMEOUT")),
-		// },
-		// DB: &Database{
-		// 	LogQueries: convert.StringToBool(os.Getenv("DB_LOG_QUERIES")),
-		// 	Timeout:    convert.StringToInt(os.Getenv("DB_TIMEOUT_SECONDS")),
-		// },
-		// JWT: &JWT{
-		// 	MinSecretLength:  convert.StringToInt(os.Getenv("JWT_MIN_SECRET_LENGTH")),
-		// 	DurationMinutes:  convert.StringToInt(os.Getenv("JWT_DURATION_MINUTES")),
-		// 	RefreshDuration:  convert.StringToInt(os.Getenv("JWT_REFRESH_DURATION")),
-		// 	MaxRefresh:       convert.StringToInt(os.Getenv("JWT_MAX_REFRESH")),
-		// 	SigningAlgorithm: os.Getenv("JWT_SIGNING_ALGORITHM"),
-		// },
-		// App: &Application{
-		// 	MinPasswordStr: convert.StringToInt(os.Getenv("APP_MIN_PASSWORD_STR")),
-		// },
+		Server: &Server{
+			Port:         fmt.Sprintf(":%d", convert.StringToInt(os.Getenv("SERVER_PORT"))),
+			Debug:        convert.StringToBool(os.Getenv("SERVER_DEBUG")),
+			ReadTimeout:  convert.StringToInt(os.Getenv("SERVER_READ_TIMEOUT")),
+			WriteTimeout: convert.StringToInt(os.Getenv("SERVER_WRITE_TIMEOUT")),
+		},
+		DB: &Database{
+			LogQueries: convert.StringToBool(os.Getenv("DB_LOG_QUERIES")),
+			Timeout:    convert.StringToInt(os.Getenv("DB_TIMEOUT_SECONDS")),
+		},
+		JWT: &JWT{
+			MinSecretLength:  convert.StringToInt(os.Getenv("JWT_MIN_SECRET_LENGTH")),
+			DurationMinutes:  convert.StringToInt(os.Getenv("JWT_DURATION_MINUTES")),
+			RefreshDuration:  convert.StringToInt(os.Getenv("JWT_REFRESH_DURATION")),
+			MaxRefresh:       convert.StringToInt(os.Getenv("JWT_MAX_REFRESH")),
+			SigningAlgorithm: os.Getenv("JWT_SIGNING_ALGORITHM"),
+		},
+		App: &Application{
+			MinPasswordStr: convert.StringToInt(os.Getenv("APP_MIN_PASSWORD_STR")),
+		},
 	}
 	if len(os.Getenv("SERVER_PORT")) == 0 {
 		return nil, fmt.Errorf("error loading port from .env ")
