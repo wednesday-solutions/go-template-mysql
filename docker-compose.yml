@@ -6,16 +6,25 @@ services:
     ports:
       - '${MYSQL_PORT}:${MYSQL_PORT}'
     restart: always
+    depends_on:
+      - redis
     env_file: 
       - ".env.docker"
     environment:
       MYSQL_DATABASE: ${MYSQL_DBNAME}
       MYSQL_PASSWORD: ${MYSQL_PASS}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        
 
   redis:
     image: redis:6-alpine
     restart: always
+
+  wait-for-db:
+    image: atkrad/wait4x
+    depends_on:
+      - db
+    command: tcp db:3306 -t 30s -i 250ms
 
   app:
     build: .
@@ -23,8 +32,8 @@ services:
     env_file:
       - ".env.docker"
     depends_on:
-      - db
-      - redis
+      wait-for-db:
+        condition: service_completed_successfully
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
 
