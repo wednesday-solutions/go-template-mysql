@@ -4,10 +4,10 @@ source ./utils.sh
 
 minikube start --kubernetes-version=v1.24.0 --cpus=4 --memory=8000 --disk-size=30g
 killall kubectl
-kubectl apply -f ./operator.yaml
+kubectl apply -f ../local/operator.yaml
 checkPodStatusWithTimeout "vitess-operator(.*)1/1(.*)Running(.*)"
 
-kubectl apply -f 01_initial_cluster_updated.yaml
+kubectl apply -f ../local/01_initial_cluster_updated.yaml
 checkPodStatusWithTimeout "vitess-cluster-useast1-vtctld(.*)1/1(.*)Running(.*)"
 checkPodStatusWithTimeout "vitess-cluster-useast1-vtgate(.*)1/1(.*)Running(.*)"
 checkPodStatusWithTimeout "vitess-cluster-etcd(.*)1/1(.*)Running(.*)" 3
