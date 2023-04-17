@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"go-template/internal/config"
+	"go-template/pkg/utl/convert"
 	"go-template/testutls"
 
 	. "github.com/agiledragon/gomonkey/v2"
@@ -59,7 +60,7 @@ func TestLoad(t *testing.T) {
 	for _, tt := range cases {
 		t.Run(tt.name, func(t *testing.T) {
 
-			_, _, err := testutls.SetupEnvAndDB(t, testutls.Parameters{EnvFileLocation: "../../.env.local"})
+			err := config.LoadEnvWithFilePrefix((convert.StringToPointerString("./../../")))
 			if err != nil {
 				fmt.Print("error loading .env file")
 			}

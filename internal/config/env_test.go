@@ -157,11 +157,11 @@ func TestLoadEnv(t *testing.T) {
 		tapped   bool
 		dbSecret string
 	}
-	username := "TEST"
-	host := "TEST"
-	dbname := "TEST"
-	password := "TEST"
-	port := "10"
+	username := "go_template_role"
+	host := "localhost"
+	dbname := "go_template"
+	password := "go_template_role456"
+	port := "5432"
 	tests := []struct {
 		name    string
 		wantErr bool
@@ -178,25 +178,35 @@ func TestLoadEnv(t *testing.T) {
 			args:    args{env: "local", tapped: false},
 		},
 		{
-			name:    "Fail to load develop env",
+			name:    "Env varInjection Error",
 			wantErr: true,
-			args: args{
-				env:    "develop",
-				tapped: false,
-			},
+			args:    args{env: "local", tapped: false},
 		},
+		{
+			name:    "dbCredsInjected True",
+			wantErr: true,
+			args:    args{env: "", tapped: false},
+		},
+
 		{
 			name:    "Successfully load develop env",
 			wantErr: false,
 			args: args{
-				env:    "develop",
+				env:    "production",
 				tapped: false,
 				dbSecret: fmt.Sprintf(`{"username":"%s",`+
 					`"host":"%s","dbname":"%s","password":"%s",`+
 					`"port":%s}`, username, host, dbname, password, port),
 			},
 		},
-
+		{
+			name:    "dbCredsInjected True",
+			wantErr: false,
+			args: args{env: "", tapped: false, dbSecret: fmt.Sprintf(`{"username":"%s",`+
+				`"host":"%s","dbname":"%s","password":"%s",`+
+				`"port":%s}`, username, host, dbname, password, port),
+			},
+		},
 		{
 			name:    "Failed to load env",
 			wantErr: true,
@@ -208,22 +218,34 @@ func TestLoadEnv(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
+
 		ApplyFunc(godotenv.Load, func(filenames ...string) (err error) {
 			// togglel whenever this file is loaded
 			tt.args.tapped = true
 			if tt.args.err == "" {
+
+				if tt.name == "Env varInjection Error" && len(filenames) > 0 && filenames[0] == ".env.local" {
+					return fmt.Errorf(tt.args.err)
+				}
+
 				return nil
 			}
 			return fmt.Errorf(tt.args.err)
 
 		})
 		os.Setenv("ENVIRONMENT_NAME", tt.args.env)
-
 		if tt.args.dbSecret != "" {
 			os.Setenv("DB_SECRET", tt.args.dbSecret)
 		}
 		t.Run(tt.name, func(t *testing.T) {
+			if tt.name == "dbCredsInjected True" {
+				ApplyFunc(GetBool, func(key string) bool {
+					return true
+				})
+			}
+
 			tapped := tt.args.tapped
+
 			if err := LoadEnv(); (err != nil) != tt.wantErr {
 				t.Errorf("LoadEnv() error = %v, wantErr %v", err, tt.wantErr)
 			}

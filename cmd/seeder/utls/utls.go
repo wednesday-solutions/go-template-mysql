@@ -2,6 +2,7 @@ package utls
 
 import (
 	"fmt"
+	"go-template/internal/config"
 	"go-template/internal/mysql"
 	"go-template/pkg/utl/zaplog"
 	"log"
@@ -10,6 +11,10 @@ import (
 
 // SeedData ...
 func SeedData(tableName string, rawQuery string) error {
+	err := config.LoadEnv()
+	if err != nil {
+		fmt.Print(err)
+	}
 	db, err := mysql.Connect()
 
 	if err != nil {
@@ -23,7 +28,7 @@ func SeedData(tableName string, rawQuery string) error {
 	for _, v := range queries[0 : len(queries)-1] {
 		_, err := db.Exec(v)
 		if err != nil {
-			zaplog.Logger.Error("error while executing seed script for ", tableName, err)
+			zaplog.Logger.Error("error while executing seed script for", tableName, err)
 			log.Fatal(err)
 
 			return err
