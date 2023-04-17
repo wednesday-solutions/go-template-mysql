@@ -3,7 +3,7 @@ package utls
 import (
 	"fmt"
 	"go-template/internal/config"
-	"go-template/internal/postgres"
+	"go-template/internal/mysql"
 	"go-template/pkg/utl/zaplog"
 	"log"
 	"strings"
@@ -15,7 +15,7 @@ func SeedData(tableName string, rawQuery string) error {
 	if err != nil {
 		fmt.Print(err)
 	}
-	db, err := postgres.Connect()
+	db, err := mysql.Connect()
 
 	if err != nil {
 		zaplog.Logger.Error("error while connecting to seed data", err)
