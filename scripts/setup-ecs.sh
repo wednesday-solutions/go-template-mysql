@@ -10,6 +10,6 @@ copilot storage init -n "$1-$2-cluster" -t Aurora -w "$1-$2-svc" --engine Postgr
 
 copilot storage init -n "$1-$2-bucket" -t S3 
 
-aws s3 cp .env "s3://$1-$2-bucket/develop/"
+aws s3 cp .env "s3://$1-$2-bucket/$2/"
 
 # copilot deploy --name "$1-$2-svc" -e "$2"
