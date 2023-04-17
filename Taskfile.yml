@@ -1,6 +1,9 @@
 version: '2'
 
 tasks:
+  hello:
+    cmds:
+      - echo "hello world"
   test:
     cmds:
       - echo " *** Running Coverage Tests ***"

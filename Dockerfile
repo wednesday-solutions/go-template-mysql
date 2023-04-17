@@ -1,30 +1,48 @@
-FROM golang:1.18-alpine3.16
+FROM golang:1.18-alpine3.16 AS builder
 RUN apk add build-base
 
-RUN mkdir -p /go/src/github.com/wednesday-solutions/go-template-mysql
+RUN mkdir  /app
+ADD . /app
 
-ADD . /go/src/github.com/wednesday-solutions/go-template-mysql
-
-WORKDIR /go/src/github.com/wednesday-solutions/go-template-mysql
-
+WORKDIR /app
+ARG ENVIRONMENT_NAME 
+ENV ENVIRONMENT_NAME=$ENVIRONMENT_NAME
 RUN GOARCH=amd64 \
     GOOS=linux \
     CGO_ENABLED=0 \
     go mod vendor
-RUN mkdir -p /go/src/github.com/wednesday-solutions/go-template-mysql/output
-RUN go build -o ./output/main ./cmd/server/main.go
-RUN go build -o ./output/seeder ./cmd/seeder/main.go
+
+
+RUN go run ./cmd/seeder/main.go
+RUN go build -o ./output/server ./cmd/server/main.go
 RUN go build -o ./output/migrations ./cmd/migrations/main.go
+RUN go build  -o ./output/seeder ./cmd/seeder/exec/seed.go
 
 
-FROM golang:1.18-alpine3.16
+FROM alpine:latest
+RUN apk add --no-cache libc6-compat 
+RUN apk add --no-cache --upgrade bash
+RUN addgroup -S nonroot \
+    && adduser -S nonroot -G nonroot
+
+
 ARG ENVIRONMENT_NAME
+ENV ENVIRONMENT_NAME=$ENVIRONMENT_NAME
+
 RUN mkdir -p /app/
-ADD .  /app
-
 WORKDIR /app
+USER nonroot
 
-COPY --from=0 /go/src/github.com/wednesday-solutions/go-template-mysql/output /app/
+COPY /scripts /app/scripts/
+COPY --from=builder /app/output/ /app/
+COPY --from=builder /app/cmd/seeder/exec/build/ /app/cmd/seeder/exec/build/
 
-CMD ["sh", "/app/scripts/migrate-and-run.sh"]
-EXPOSE 9000
+COPY ./.env.* /app/output/
+COPY ./.env.* /app/output/cmd/seeder/exec/build/
+COPY ./.env.* /app/output/cmd/seeder/exec/
+COPY ./.env.* /app/output/cmd/seeder/
+COPY ./.env.* /app/output/cmd/
+COPY ./.env.* /app/
+COPY ./scripts/ /app/
+COPY --from=builder /app/internal/migrations/ /app/internal/migrations/
+CMD ["bash","./migrate-and-run.sh"]

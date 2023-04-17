@@ -56,13 +56,17 @@ func TestLogin(
 		t.Run(
 			tt.name,
 			func(t *testing.T) {
-				err := godotenv.Load("../.env.local")
+
+				mock, db, err := testutls.SetupEnvAndDB(t, testutls.Parameters{
+					EnvFileLocation: "./../.env.local",
+				})
 				if err != nil {
-					fmt.Print(
-						"error loading .env file",
+					t.Fatalf(
+						"an error '%s' was not expected when opening a stub database connection",
+						err,
 					)
 				}
-				db, mock, err := sqlmock.New()
+				err = godotenv.Load("./../.env.base")
 				if err != nil {
 					t.Fatalf(
 						"an error '%s' was not expected when opening a stub database connection",
