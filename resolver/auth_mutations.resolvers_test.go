@@ -60,7 +60,7 @@ func TestLogin(
 				mock, db, err := testutls.SetupEnvAndDB(t, testutls.Parameters{
 					EnvFileLocation: "./../.env.local",
 				})
-				godotenv.Load("./../.env.base")
+				err = godotenv.Load("./../.env.base")
 				if err != nil {
 					t.Fatalf(
 						"an error '%s' was not expected when opening a stub database connection",
