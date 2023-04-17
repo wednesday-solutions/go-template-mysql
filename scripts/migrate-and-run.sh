@@ -2,11 +2,11 @@
 
 echo $ENVIRONMENT_NAME
 
-./output/migrations
+./migrations
 
 if [[ $ENVIRONMENT_NAME == "docker" ]]; then
     echo "seeding"
-    ./output/seeder
+    ./seeder
 fi
 
-./output/server
+./server
