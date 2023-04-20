@@ -15,7 +15,3 @@ checkPodStatusWithTimeout "vitess-cluster-vttablet-useast1(.*)3/3(.*)Running(.*)
 
 sleep 10
 ./pf.sh > /dev/null 2>&1 &
-sleep 5
-
-extTablet=$(vtctlclient ListAllTablets -- --keyspace="extdb" | grep -o -E "useast1-[0-9]*")
-vtctlclient TabletExternallyReparented "$extTablet"
