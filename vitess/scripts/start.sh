@@ -13,5 +13,9 @@ checkPodStatusWithTimeout "vitess-cluster-useast1-vtgate(.*)1/1(.*)Running(.*)"
 checkPodStatusWithTimeout "vitess-cluster-etcd(.*)1/1(.*)Running(.*)" 3
 checkPodStatusWithTimeout "vitess-cluster-vttablet-useast1(.*)3/3(.*)Running(.*)" 2
 
+echo "Found all the required components, please wait..."
+
 sleep 10
-./pf.sh > /dev/null 2>&1 &
+
+echo "Forwarding ports..."
+sh ./vitess/scripts/pf.sh
